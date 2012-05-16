@@ -83,8 +83,9 @@ class TagMixin(object):
                 the_tag.post_ids = '%s' % post_id
             else:
                 ids = the_tag.post_ids.split('|').append(post_id)
-                ids = list(set(ids))
-                the_tag.post_ids = '|'.join(ids)
+                if ids:
+                    ids = list(set(ids))
+                    the_tag.post_ids = '|'.join(ids)
             db.session.add(the_tag)
             if post_tags == '':
                 post_tags = '%s' % the_tag.id

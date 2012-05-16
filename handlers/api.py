@@ -237,9 +237,10 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         self.db.add(post)
         self.db.commit()
         # create tags
-        post.tag_ids = self.create_tags(tags.split(','), post.id)
-        self.db.add(post)
-        self.db.commit()
+        if type == Post.TYPE_POST:
+            post.tag_ids = self.create_tags(tags.split(','), post.id)
+            self.db.add(post)
+            self.db.commit()
         # delete cache
         keys = ['PostList:1', 'CategoryPostList:%s:1' % category.id, 'SystemStatus', 'ArchiveHTML']
         self.cache.delete_multi(keys)
@@ -367,7 +368,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         if type == Post.TYPE_POST:
             post.category_id = category.id
         # create tags
-        if not quick:
+        if not quick and type == Post.TYPE_POST:
             post.tag_ids = self.create_tags(tags.split(','), post.id)
         # commit
         self.db.add(post)
