@@ -71,6 +71,9 @@ class TagMixin(object):
         if tags is str:
             tags = tags.split(',')
         for tag in tags:
+            tag = tag.strip()
+            if not tag:
+                continue
             the_tag = self.get_tag_by_title(tag)
             if not the_tag:
                 the_tag = Tag()

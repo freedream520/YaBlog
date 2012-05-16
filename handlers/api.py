@@ -237,7 +237,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         self.db.add(post)
         self.db.commit()
         # create tags
-        if type == Post.TYPE_POST:
+        if type == Post.TYPE_POST and tags:
             post.tag_ids = self.create_tags(tags.split(','), post.id)
             self.db.add(post)
             self.db.commit()
@@ -368,7 +368,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         if type == Post.TYPE_POST:
             post.category_id = category.id
         # create tags
-        if not quick and type == Post.TYPE_POST:
+        if not quick and type == Post.TYPE_POST and tags:
             post.tag_ids = self.create_tags(tags.split(','), post.id)
         # commit
         self.db.add(post)
