@@ -1,0 +1,42 @@
+{% extends "../layout.html" %}
+{% block subtitle %}{{ _('Dashboard Login') }}{% end %}
+{% block header %}<h1>{{ _('Dashboard Login') }}</h1>{% end %}
+{% block entry %}
+<div class="span12">
+    <form class="form-horizontal" action="/dashboard/login" method="post">
+        {{ xsrf_form_html() }}
+        {% if form_error('form') %}
+        <div class="alert alert-error">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ form_error('form') }}
+        </div>
+        {% end %}
+        <fieldset>
+            <div class="control-group{{ form_class('username') }}">
+                <label class="control-label" for="username">{{ _('Username') }}</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input type="text" id="username" name="usename" value="{{ username }}" required="required" />
+                        <span class="help-inline">{{ form_error('username') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group{{ form_class('password') }}">
+                <label class="control-label" for="password">{{ _('Password') }}</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-key"></i></span>
+                        <input type="password" id="password" name="password" required="required" />
+                        <span class="help-inline">{{ form_error('password') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <input class="btn btn-primary" type="submit" value="{{ _('Login') }}" />
+                <input class="btn" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('username').focus();" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}

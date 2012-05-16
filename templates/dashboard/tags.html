@@ -1,0 +1,54 @@
+<h2>{{ _('Tag List') }}</h2>
+<table id="table-tag-list" class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ _('Title') }}</th>
+            <th>{{ _('Slug') }}</th>
+            <th>{{ _('Post Count') }}</th>
+            <th>{{ _('Admin') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tag in page.datalist %}
+        <tr id="tag-{{ tag.id }}" class="tag" data-id="{{ tag.id }}">
+            <td>{{ tag.id }}</td>
+            <td class="tag-title">{{ escape(tag.title) }}</td>
+            <td class="tag-slug">{{ escape(tag.slug) }}</td>
+            <td>{{ tag.post_count }}</td>
+            <td>
+                <a href="##" class="btn btn-primary js-edit" title="{{ _('Edit') }}" data-target="#tag-{{ tag.id }}" data-id="{{ tag.id }}"><i class="icon-edit"></i> {{ _('Edit') }}</a>
+                <a href="/api/tag/{{ tag.id }}" class="btn btn-danger js-delete" title="{{ _('Delete') }}" data-target="#tag-{{ tag.id }}" data-id="{{ tag.id }}"><i class="icon-remove-sign"></i> {{ _('Delete') }}</a>
+            </td>
+        </tr>
+        {% end %}
+        <tr id="edit-tag-row" class="inline-edit-row inline-editor hide">
+            <td colspan="5">
+                <form id="form-edit-tag" class="inline-edit-form form-horizontal" action="" method="post">
+                    <div class="alert alert-error result hide"></div>
+                    {{ xsrf_form_html() }}
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="edit-tag-title">{{ _('Title') }}</label>
+                            <div class="controls">
+                                <input type="text" id="edit-tag-title" name="title" required="required" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="edit-tag-slug">{{ _('Slug') }}</label>
+                            <div class="controls">
+                                <input type="text" id="edit-tag-slug" name="slug" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <img class="loading hide" src="{{ static_url('images/loading.gif') }}" />
+                            <input class="btn btn-primary js-submit" type="submit" value="{{ _('Update') }}" />
+                            <input class="btn js-reset" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('edit-tag-title').focus();" />
+                            <a class="btn btn-success js-cancel" href="##" title="{{ _('Cancel') }}"><i class="icon-remove"></i> {{ _('Cancel') }}</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

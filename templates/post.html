@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block subtitle %}{{ escape(post.title) }}{% end %}
+{% block header %}<h1>{{ escape(post.title) }}</h1>{% end %}
+{% block entry %}
+<div class="entry span10">
+    {{ post.html }}
+</div>
+<div class="sidebar span2">
+    <h3>{{ _('Published') }}</h3>
+    <time class="updated" datetime="{{ xmldatetime(post.created) }}">{{ format_date(post.created) }}</time>
+    <h3>{{ _('Category') }}</h3>
+    <span class="label">
+        <a href="{{ post.category.permalink }}" title="{{ escape(post.category.title) }}">{{ escape(post.category.title) }}</a>
+    </span>
+    <h3>{{ _('Tags') }}</h3>
+    <ul class="tag-box">
+        {% for tag in post.tags %}
+        <li>
+            <a href="{{ tag.permalink }}" title="{{ escape(tag.title) }}">{{ escape(tag.title) }}</a>
+        </li>
+        {% end %}
+    </ul>
+</div>
+{% if post.comment_open %}
+<div class="ds-thread"></div>
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:"{{ context.duoshuo_shortname }}"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+{% end %}
+{% end %}

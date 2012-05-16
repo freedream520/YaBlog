@@ -1,0 +1,202 @@
+{% extends "../layout.html" %}
+{% block subtitle %}{{ _('Dashboard') }}{% end %}
+{% block header %}<h1>{{ _('Dashboard') }}</h1>{% end %}
+{% block entry %}
+<div id="sidebar" class="span2">
+    <div class="accordion" id="toolbar">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#toolbar" href="#collapse1">{{ _('Dashboard') }}</a>
+            </div>
+            <div class="accordion-body collapse in" id="collapse1">
+                <div class="accordion-inner">
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li class="active"><a href="/dashboard" title="{{ _('Home') }}"><i class="icon-home"></i> {{ _('Home') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#toolbar" href="#collapse2">{{ _('Category') }}</a>
+            </div>
+            <div class="accordion-body collapse" id="collapse2">
+                <div class="accordion-inner">
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li><a id="js-category-list" class="js-api" href="/dashboard/category/list" title="{{ _('Category List') }}"><i class="icon-th"></i> {{ _('Category List') }}</a></li>
+                        <li><a data-toggle="modal" href="#modal-create-category" title="{{ _('Create Category') }}"><i class="icon-plus-sign"></i> {{ _('Create Category') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#toolbar" href="#collapse3">{{ _('Post') }}</a>
+            </div>
+            <div class="accordion-body collapse" id="collapse3">
+                <div class="accordion-inner">
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li><a id="js-post-list" class="js-api" href="/dashboard/post/list" title="{{ _('Post List') }}"><i class="icon-th-list"></i> {{ _('Post List') }}</a></li>
+                        <li><a class="js-api js-create-post" href="/dashboard/post/create" title="{{ _('Create Post') }}"><i class="icon-plus-sign"></i> {{ _('Create Post') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#toolbar" href="#collapse4">{{ _('Page') }}</a>
+            </div>
+            <div class="accordion-body collapse" id="collapse4">
+                <div class="accordion-inner">
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li><a id="js-page-list" class="js-api" href="/dashboard/page/list" title="{{ _('Page List') }}"><i class="icon-th-list"></i> {{ _('Page List') }}</a></li>
+                        <li><a class="js-api js-create-page" href="/dashboard/page/create" title="{{ _('Create Page') }}"><i class="icon-plus-sign"></i> {{ _('Create Page') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#toolbar" href="#collapse5">{{ _('Tag') }}</a>
+            </div>
+            <div class="accordion-body collapse" id="collapse5">
+                <div class="accordion-inner">
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li><a id="js-tag-list" class="js-api" href="/dashboard/tag/list" title="{{ _('Tag List') }}"><i class="icon-tags"></i> {{ _('Tag List') }}</a></li>
+                        <li><a data-toggle="modal" href="#modal-create-tag" title="{{ _('Create Tag') }}"><i class="icon-plus-sign"></i> {{ _('Create Tag') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#toolbar" href="#collapse6">{{ _('Link') }}</a>
+            </div>
+            <div class="accordion-body collapse" id="collapse6">
+                <div class="accordion-inner">
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li><a class="js-api js-link-list" href="/dashboard/link/list" title="{{ _('Link List') }}"><i class="icon-external-link"></i> {{ _('Link List') }}</a></li>
+                        <li><a data-toggle="modal" href="#modal-create-link" title="{{ _('Create Link') }}"><i class="icon-plus-sign"></i> {{ _('Create Link') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="content" class="span10">
+    {% module SystemStatusModule() %}
+</div>
+{% end %}
+{% block afterscript %}
+<script type="text/javascript" src="{{ static_url('js/dashboard.js') }}"></script>
+{% end %}
+{% block afterbody %}
+<div id="modal-create-category" class="modal fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>{{ _('Create Category') }}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-error result" style="display:none;"></div>
+        <form id="form-create-category" class="form-horizontal" action="/api/category" method="post" data-target="#js-category-list">
+            {{ xsrf_form_html() }}
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="cat-title">{{ _('Title') }}</label>
+                    <div class="controls">
+                        <input type="text" id="cat-title" name="title" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="cat-slug">{{ _('Slug') }}</label>
+                    <div class="controls">
+                        <input type="text" id="cat-slug" name="slug" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="cat-desc">{{ _('Description') }}</label>
+                    <div class="controls">
+                        <textarea id="cat-desc" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <img class="loading hide" src="{{ static_url('images/loading.gif') }}" />
+                    <input class="btn btn-primary js-submit" type="submit" value="{{ _('Create') }}" />
+                    <input class="btn js-reset" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('cat-title').focus();" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer"></div>
+</div>
+<div id="modal-create-tag" class="modal fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>{{ _('Create Tag') }}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-error result" style="display:none;"></div>
+        <form id="form-create-tag" class="form-horizontal" action="/api/tag" method="post" data-target="#js-tag-list">
+            {{ xsrf_form_html() }}
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="tag-title">{{ _('Title') }}</label>
+                    <div class="controls">
+                        <input type="text" id="tag-title" name="title" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="tag-slug">{{ _('Slug') }}</label>
+                    <div class="controls">
+                        <input type="text" id="tag-slug" name="slug" required="required" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <img class="loading hide" src="{{ static_url('images/loading.gif') }}" />
+                    <input class="btn btn-primary js-submit" type="submit" value="{{ _('Create') }}" />
+                    <input class="btn js-reset" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('tag-title').focus();" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer"></div>
+</div>
+<div id="modal-create-link" class="modal fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>{{ _('Create Category') }}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-error result" style="display:none;"></div>
+        <form id="form-create-link" class="form-horizontal" action="/api/link" method="post" data-target="#js-link-list">
+            {{ xsrf_form_html() }}
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="link-title">{{ _('Title') }}</label>
+                    <div class="controls">
+                        <input type="text" id="link-title" name="title" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="link-url">{{ _('URL') }}</label>
+                    <div class="controls">
+                        <input type="text" id="link-url" name="url" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="link-desc">{{ _('Description') }}</label>
+                    <div class="controls">
+                        <textarea id="link-desc" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <img class="loading hide" src="{{ static_url('images/loading.gif') }}" />
+                    <input class="btn btn-primary js-submit" type="submit" value="{{ _('Create') }}" />
+                    <input class="btn js-reset" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('link-title').focus();" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer"></div>
+</div>
+{% end %}

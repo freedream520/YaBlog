@@ -1,0 +1,7 @@
+<ul class="tag-box inline">
+{% for tag in tags %}
+    <li>
+        <a href="{{ tag.permalink }}" title="{{ escape(tag.title) }}">{{ escape(tag.title) }} <span>{{ tag.post_count }}</span></a>
+    </li>
+{% end %}
+</ul>

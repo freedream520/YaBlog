@@ -1,0 +1,43 @@
+<h2>{{ _('Edit Page') }}</h2>
+<form id="form-edit-page" class="post-form form-horizontal" action="/api/post/{{ page.id }}" method="PUT">
+    <div class="alert alert-error result hide"></div>
+    <input type="hidden" name="type" value="page" />
+    {{ xsrf_form_html() }}
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label" for="page-title">{{ _('Title') }}</label>
+            <div class="controls">
+                <input class="input-xxlarge" type="text" id="page-title" name="title" value="{{ escape(page.title) }}" required="required" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="page-slug">{{ _('Slug') }}</label>
+            <div class="controls">
+                <input class="input-xxlarge" type="text" id="page-slug" name="slug" value="{{ page.slug }}" required="required" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <textarea class="input-xxlarge" rows="15" name="content">{{ page.content }}</textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">{{ _('Allow Comment') }} ?</label>
+            <div class="controls">
+                <label class="radio inline">
+                    <input type="radio" name="comment_open" value="1"{% if page.comment_open %} checked="checked"{% end %} />
+                    {{ _('Open') }}
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="comment_open" value="0"{% if not page.comment_open %} checked="checked"{% end %} />
+                    {{ _('Close') }}
+                </label>
+            </div>
+        </div>
+        <div class="form-actions">
+            <img class="loading hide" src="{{ static_url('images/loading.gif') }}" />
+            <input class="btn btn-primary js-submit" type="submit" value="{{ _('Update') }}" />
+            <input class="btn js-reset" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('page-title').focus();" />
+        </div>
+    </fieldset>
+</form>

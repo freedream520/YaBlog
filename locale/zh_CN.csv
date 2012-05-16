@@ -1,0 +1,119 @@
+"January", 一月
+"February", 二月
+"March", 三月
+"April", 四月
+"May", 五月
+"June", 六月
+"July", 七月
+"August", 八月
+"September", 九月
+"October", 十月
+"November", 十一月
+"December", 十二月
+"Monday", 星期一
+"Tuesday", 星期二
+"Wednesday", 星期三
+"Thursday", 星期四
+"Friday", 星期五
+"Saturday", 星期六
+"Sunday", 星期日
+"1 second ago","1秒前","singular"
+"%(seconds)d seconds ago","%(seconds)d秒前","plural"
+"1 minute ago",1分钟前,"singular"
+"%(minutes)d minutes ago","%(minutes)d分钟前","plural"
+"1 hour ago","1小时前","singular"
+"%(hours)d hours ago","%(hours)d小时前","plural"
+"yesterday", 昨天
+"yesterday at %(time)s", 昨天 %(time)s
+"%(weekday)s at %(time)s", %(weekday)s %(time)s
+"%(month_name)s %(day)s at %(time)s", %(month_name)s %(day)s at %(time)s
+"%(month_name)s %(day)s, %(year)s at %(time)s", %(month_name)s %(day)s，%(year)s %(time)s
+"Messense", 乱了感觉
+"Home", 首页
+"Categories", 分类
+"Category", 分类
+"Posts", 文章
+"Post", 文章
+"Pages", 页面
+"Page", 页面
+"Tags", 标签
+"Tag", 标签
+"Links", 链接
+"Link", 链接
+"About", 关于
+"Archive", 归档
+"Dashboard", 控制面板
+"Category List", 分类列表
+"Create Category", 新建分类
+"Post List", 文章列表
+"Create Post", 发表文章
+"Edit Post", 编辑文章
+"Page List", 页面列表
+"Create Page", 新建页面
+"Edit Page", 编辑页面
+"Tag List", 标签列表
+"Create Tag", 新建标签
+"Link List", 链接列表
+"Create Link", 新建链接
+"No such category", 分类不存在
+"Category not found", 分类不存在
+"Post not found", 文章不存在
+"Access denied", 没有操作权限
+"Title field can not be empty", 标题不能为空
+"Content field can not be empty", 内容不能为空
+"Slug field can not be empty", 固定链接不能为空
+"Slug already exists", 固定链接已存在
+"Category field can not be empty", 分类不能为空
+"URL field can not be empty", URL不能为空
+"Successfully created", 创建成功
+"Successfully modified", 修改成功
+"Successfully deleted", 删除成功
+"Tag not found", 标签不存在
+"Tag already exists", 标签已存在
+"Link not found", 链接不存在
+"Username", 用户名
+"Password", 密码
+"Username field can not be empty", 用户名不能为空
+"Password field can not be empty", 密码不能为空
+"Username or password is not correct", 用户名或密码错误
+"Title", 标题
+"Content", 内容
+"Slug", 固定链接
+"Description", 简介
+"Create", 创建
+"Reset", 重置
+"Login", 登录
+"Logout", 登出
+"System Status", 系统运行状态
+"Category Count", 分类数量
+"Post Count", 文章数量
+"Page Count", 页面数量
+"Tag Count", 标签数量
+"Link Count", 链接数量
+"Admin", 管理
+"Edit", 编辑
+"Delete", 删除
+"Update", 更新
+"Cancel", 取消
+"Quick Edit", 快速编辑
+"Standard", 标准
+"Aside", 日志
+"Gallery", 相册
+"Image", 图像
+"Quote", 引语
+"Status", 状态
+"Video", 视频
+"Audio", 音频
+"Chat", 聊天
+"Post Format", 文章形式
+"Thumbnail", 缩略图
+"Excerpt", 摘要
+"Date", 日期
+"Allow Comment", 开启评论
+"Yes", 是
+"No", 否
+"Open", 开启
+"Close", 关闭
+"Guestbook", 留言
+"Recent Published Posts", 最近发布的文章
+"Published", 发表时间

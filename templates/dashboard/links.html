@@ -1,0 +1,59 @@
+<h2>{{ _('Link List') }}</h2>
+<table id="table-link-list" class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ _('Title') }}</th>
+            <th>{{ _('URL') }}</th>
+            <th>{{ _('Admin') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for link in links %}
+        <tr id="link-{{ link.id }}" class="link" data-id="{{ link.id }}">
+            <td>{{ link.id }}</td>
+            <td class="link-title">{{ escape(link.title) }}</td>
+            <td class="link-url">{{ escape(link.url) }}</td>
+            <td class="link-desc hide">{{ escape(link.description) }}</td>
+            <td>
+                <a href="##" class="btn btn-primary js-edit" title="{{ _('Edit') }}" data-target="#link-{{ link.id }}" data-id="{{ link.id }}"><i class="icon-edit"></i> {{ _('Edit') }}</a>
+                <a href="/api/link/{{ link.id }}" class="btn btn-danger js-delete" title="{{ _('Delete') }}" data-target="#link-{{ link.id }}" data-id="{{ link.id }}"><i class="icon-remove-sign"></i> {{ _('Delete') }}</a>
+            </td>
+        </tr>
+        {% end %}
+        <tr id="edit-link-row" class="inline-edit-row inline-editor hide">
+            <td colspan="5">
+                <form id="form-edit-link" class="inline-edit-form form-horizontal" action="" method="post">
+                    <div class="alert alert-error result hide"></div>
+                    {{ xsrf_form_html() }}
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="edit-link-title">{{ _('Title') }}</label>
+                            <div class="controls">
+                                <input type="text" id="edit-link-title" name="title" required="required" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="edit-link-url">{{ _('URL') }}</label>
+                            <div class="controls">
+                                <input type="text" id="edit-link-url" name="url" required="required" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="edit-link-desc">{{ _('Description') }}</label>
+                            <div class="controls">
+                                <textarea id="edit-link-desc" name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <img class="loading hide" src="{{ static_url('images/loading.gif') }}" />
+                            <input class="btn btn-primary js-submit" type="submit" value="{{ _('Update') }}" />
+                            <input class="btn js-reset" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('edit-link-title').focus();" />
+                            <a class="btn btn-success js-cancel" href="##" title="{{ _('Cancel') }}"><i class="icon-remove"></i> {{ _('Cancel') }}</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

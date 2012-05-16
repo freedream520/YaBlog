@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <title>{% block title %}{% block subtitle %}{% end %} | {{ _(context.sitename) }}{% end %}</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+        <meta name="author" content="{% block author %}{% end %}" />
+        <meta name="description" content="{% block description %}{% end %}" />
+        <link rel="stylesheet" type="text/css" href="{{ static_url('bootstrap/css/bootstrap.min.css') }}" />
+        {% if is_mobile() %}<link rel="stylesheet" type="text/css" href="{{ static_url('bootstrap/css/bootstrap-responsive.min.css') }}" />{% end %}
+        <link rel="stylesheet" type="text/css" href="{{ static_url('css/style.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ static_url('css/font-awesome.css') }}" />
+        {% block afterstyle %}{% end %}
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!--[if IE 6]>
+        <script type="text/javascript" src="http://letskillie6.googlecode.com/svn/trunk/letskillie6.zh_CN.pack.js"></script>
+        <![endif]-->
+        {% block afterhead %}{% end %}
+    </head>
+    <body>
+        <header id="navbar" class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                        <div class="container">
+                                {% if not is_mobile() %}<a class="brand" href="/" title="{{ _(context.sitename) }}">{{ _(context.sitename) }}</a>{% end %}
+                                {% block navbar %}
+                                <ul class="nav">
+                                        {% if is_mobile() %}<li><a href="/" title="{{ _('Home') }}"><i class="icon-home"></i> {{ _('Home') }}</a></li>{% end %}
+                                        <li><a href="/categories" title="{{ _('Categories') }}"><i class="icon-th"></i> {{ _('Categories') }}</a></li>
+                                        <li><a href="/archive" title="{{ _('Archive') }}"><i class="icon-th-list"></i> {{ _('Archive') }}</a></li>
+                                        <li><a href="/tags" title="{{ _('Tags') }}"><i class="icon-tags"></i> {{ _('Tags') }}</a></li>
+                                        <li><a href="/links" title="{{ _('Links') }}"><i class="icon-external-link"></i> {{ _('Links') }}</a></li>
+                                        <li><a href="/guestbook" title="{{ _('Guestbook') }}"><i class="icon-comments"></i> {{ _('Guestbook') }}</a></li>
+                                        <li><a href="/about" title="{{ _('About') }}"><i class="icon-info-sign"></i> {{ _('About') }}</a></li>
+                                </ul>
+                                {% end %}
+                        </div>
+                </div>
+        </header>
+        <section id="main">
+                <div class="container">
+                        {% block main %}
+                        <div class="content">
+                                <header class="page-header">
+                                        {% block header %}
+
+                                        {% end %}
+                                </header>
+                                <div class="row-fluid">
+                                        {% block entry %}
+
+                                        {% end %}
+                                </div>
+                        </div>
+                        {% end %}
+                        <footer id="footer">
+                                {% block footer %}
+                                <p>&copy; messense 2012 Powered by YaBlog</p>
+                                {% end %}
+                        </footer>
+                </div>
+        </section>
+        <script type="text/javascript" src="{{ static_url('js/jquery-1.7.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('bootstrap/js/bootstrap.min.js') }}"></script>
+        {% block afterscript %}{% end %}
+        {% block afterbody %}{% end %}
+    </body>
+</html>

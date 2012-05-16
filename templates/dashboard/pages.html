@@ -1,0 +1,55 @@
+<h2>{{ _('Page List') }}</h2>
+<table id="table-page-list" class="table table-striped">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>{{ _('Title') }}</td>
+            <td>{{ _('Slug') }}</td>
+            <td>{{ _('Admin') }}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for page in pages %}
+        <tr id="page-{{ page.id }}" class="page" data-id="{{ page.id }}">
+            <td>{{ page.id }}</td>
+            <td class="page-title"><a href="/dashboard/page/{{ page.id }}" class="js-api js-full-edit" title="{{ _('Edit') }}" data-target="#page-{{ page.id }}" data-id="{{ page.id }}">{{ escape(page.title) }}</a></td>
+            <td class="page-slug">{{ escape(page.slug) }}</td>
+            <td>
+                <a href="/dashboard/page/{{ page.id }}" class="btn btn-primary js-api js-full-edit" title="{{ _('Edit') }}" data-target="#page-{{ page.id }}" data-id="{{ page.id }}"><i class="icon-edit"></i> {{ _('Edit') }}</a>
+                <a href="##" class="btn btn-primary js-edit" title="{{ _('Quick Edit') }}" data-target="#page-{{ page.id }}" data-id="{{ page.id }}"><i class="icon-edit"></i> {{ _('Quick Edit') }}</a>
+                <a href="/api/post/{{ page.id }}" class="btn btn-danger js-delete" title="{{ _('Delete') }}" data-target="#page-{{ page.id }}" data-id="{{ page.id }}"><i class="icon-remove-sign"></i> {{ _('Delete') }}</a>
+            </td>
+        </tr>
+        {% end %}
+        <tr id="edit-page-row" class="inline-edit-row inline-editor hide">
+            <td colspan="4">
+                <form id="form-edit-page" class="inline-edit-form form-horizontal" action="" method="post">
+                    <div class="alert alert-error result hide"></div>
+                    <input type="hidden" name="type" value="page" />
+                    <input type="hidden" name="quick" value="1" />
+                    {{ xsrf_form_html() }}
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="edit-page-title">{{ _('Title') }}</label>
+                            <div class="controls">
+                                <input type="text" id="edit-page-title" name="title" required="required" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="edit-page-slug">{{ _('Slug') }}</label>
+                            <div class="controls">
+                                <input type="text" id="edit-page-slug" name="slug" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <img class="loading hide" src="{{ static_url('images/loading.gif') }}" />
+                            <input class="btn btn-primary js-submit" type="submit" value="{{ _('Update') }}" />
+                            <input class="btn js-reset" type="reset" value="{{ _('Reset') }}" onclick="javascript:document.getElementById('edit-cat-title').focus();" />
+                            <a class="btn btn-success js-cancel" href="##" title="{{ _('Cancel') }}"><i class="icon-remove"></i> {{ _('Cancel') }}</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

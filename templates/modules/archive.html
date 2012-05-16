@@ -1,0 +1,14 @@
+{% for year, month_posts in posts.iteritems() %}
+    <h2>{{ year }}</h2>
+    {% for month, the_posts in month_posts.iteritems() %}
+    <h3>{{ month }}</h3>
+    <ul class="posts">
+        {% for post in the_posts %}
+        <li>
+            <span>{{ post.created.strftime('%B, %d, %Y') }}</span> &raquo; 
+            <a href="{{ post.permalink }}" title="{{ escape(post.title) }}">{{ escape(post.title) }}</a>
+        </li>
+        {% end %}
+    </ul>
+    {% end %}
+{% end %}

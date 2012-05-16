@@ -1,0 +1,89 @@
+.highlight .hll{background-color:#ffffcc;}
+.highlight .c{color:#8f5902;font-style:italic;}
+.highlight .err{color:#a40000;border:1px solid #ef2929;}
+.highlight .g{color:#000000;}
+.highlight .k{color:#204a87;font-weight:bold;}
+.highlight .l{color:#000000;}
+.highlight .n{color:#000000;}
+.highlight .o{color:#ce5c00;font-weight:bold;}
+.highlight .x{color:#000000;}
+.highlight .p{color:#000000;font-weight:bold;}
+.highlight .cm{color:#8f5902;font-style:italic;}
+.highlight .cp{color:#8f5902;font-style:italic;}
+.highlight .c1{color:#8f5902;font-style:italic;}
+.highlight .cs{color:#8f5902;font-style:italic;}
+.highlight .gd{color:#a40000;}
+.highlight .ge{color:#000000;font-style:italic;}
+.highlight .gr{color:#ef2929;}
+.highlight .gh{color:#000080;font-weight:bold;}
+.highlight .gi{color:#00a000;}
+.highlight .go{color:#000000;font-style:italic;}
+.highlight .gp{color:#8f5902;}
+.highlight .gs{color:#000000;font-weight:bold;}
+.highlight .gu{color:#800080;font-weight:bold;}
+.highlight .gt{color:#a40000;font-weight:bold;}
+.highlight .kc{color:#204a87;font-weight:bold;}
+.highlight .kd{color:#204a87;font-weight:bold;}
+.highlight .kn{color:#204a87;font-weight:bold;}
+.highlight .kp{color:#204a87;font-weight:bold;}
+.highlight .kr{color:#204a87;font-weight:bold;}
+.highlight .kt{color:#204a87;font-weight:bold;}
+.highlight .ld{color:#000000;}
+.highlight .m{color:#0000cf;font-weight:bold;}
+.highlight .s{color:#4e9a06;}
+.highlight .na{color:#c4a000;}
+.highlight .nb{color:#204a87;}
+.highlight .nc{color:#000000;}
+.highlight .no{color:#000000;}
+.highlight .nd{color:#5c35cc;font-weight:bold;}
+.highlight .ni{color:#ce5c00;}
+.highlight .ne{color:#cc0000;font-weight:bold;}
+.highlight .nf{color:#000000;}
+.highlight .nl{color:#f57900;}
+.highlight .nn{color:#000000;}
+.highlight .nx{color:#000000;}
+.highlight .py{color:#000000;}
+.highlight .nt{color:#204a87;font-weight:bold;}
+.highlight .nv{color:#000000;}
+.highlight .ow{color:#204a87;font-weight:bold;}
+.highlight .w{color:#f8f8f8;text-decoration:underline;}
+.highlight .mf{color:#0000cf;font-weight:bold;}
+.highlight .mh{color:#0000cf;font-weight:bold;}
+.highlight .mi{color:#0000cf;font-weight:bold;}
+.highlight .mo{color:#0000cf;font-weight:bold;}
+.highlight .sb{color:#4e9a06;}
+.highlight .sc{color:#4e9a06;}
+.highlight .sd{color:#8f5902;font-style:italic;}
+.highlight .s2{color:#4e9a06;}
+.highlight .se{color:#4e9a06;}
+.highlight .sh{color:#4e9a06;}
+.highlight .si{color:#4e9a06;}
+.highlight .sx{color:#4e9a06;}
+.highlight .sr{color:#4e9a06;}
+.highlight .s1{color:#4e9a06;}
+.highlight .ss{color:#4e9a06;}
+.highlight .bp{color:#3465a4;}
+.highlight .vc{color:#000000;}
+.highlight .vg{color:#000000;}
+.highlight .vi{color:#000000;}
+.highlight .il{color:#0000cf;font-weight:bold;}
+/* Layout */
+html, body {background-color: #eee;font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;}
+body{padding-top:40px;}
+.fn-wrap{overflow:hidden;word-wrap:break-word;}
+.content{position: relative;background-color: #fff;padding: 20px;-webkit-border-radius: 0 0 6px 6px;-moz-border-radius: 0 0 6px 6px;border-radius: 0 0 6px 6px;-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);-moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);box-shadow: 0 1px 2px rgba(0,0,0,.15);}
+.page-header {background-color: #f5f5f5;padding: 20px 20px 10px;margin: -20px -20px 20px;}
+#footer{margin-top: 17px;padding-top: 17px;border-top: 1px solid #EEE;}
+#footer p{text-align:center;font-size:15px;}
+.tag-box {list-style:none;margin:0;padding:5px 0 ;overflow:hidden;}
+.tag-box li {line-height:28px;}
+.tag-box.inline li {float:left;}
+.tag-box a {padding: 3px 6px;margin: 2px;background: #eee;color:#005F6B;border-radius: 3px;text-decoration:none;}
+.tag-box a span{vertical-align:super;font-size:0.8em;}
+.tag-box a.active {background:#57A957;border:1px solid #4C964D;color:#FFF;}
+.posts{padding-top:10px;}
+.posts li{color: grey;}
+.label{padding: 1px 3px 2px;font-size: 9.75px;font-weight: bold;color: white;white-space: nowrap;background-color: #BFBFBF;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+.label a {color: white;text-decoration: none;}
+.sidebar h3{padding:10px 0;}
+.content p{font-size: 15px;font-weight: normal;line-height: 180%;margin-bottom: 20px;font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;}
