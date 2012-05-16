@@ -73,6 +73,8 @@ class PageMixin(object):
             order = 0
         if not count:
             count = q.count()
+        if perpage == 0:
+            perpage = 10
         page_number = (count - 1) / perpage + 1  # this algorithm is fabulous
         page = self._get_page()
         if page > page_number:
