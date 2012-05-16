@@ -36,7 +36,7 @@ class PostListModule(UIModule, PageMixin):
         if not html:
             query = Post.query.filter_by(type=Post.TYPE_POST).order_by('-id')
             count = query.count()
-            page = ObjectDict(self._get_pagination(query, count, count))
+            page = ObjectDict(self._get_pagination(query, count, 10))
             html = self.render_string(tpl, page=page)
             self.cache.set(key, html, 3600)
         return html
