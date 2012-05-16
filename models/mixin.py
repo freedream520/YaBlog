@@ -23,7 +23,9 @@ class PostMixin(object):
     def get_posts_by_category(self, id):
         return Post.query.filter_by(type=Post.TYPE_POST, category_id=id).all()
 
-    def get_posts_by_ids(self, ids):
+    def get_posts(self, ids):
+        if ids is not set and ids isinstance(tuple, list):
+            ids = set(ids)
         return Post.query.filter_by(id__in=ids).all()
 
     def get_all_posts(self):
@@ -43,7 +45,9 @@ class CategoryMixin(object):
     def get_category_by_title(self, title):
         return Category.query.filter_by(title=title).first()
 
-    def get_category_by_ids(self, ids):
+    def get_categories(self, ids):
+        if ids is not set and ids isinstance(tuple, list):
+            ids = set(ids)
         return Category.query.filter_by(id__in=ids).all()
 
     def get_all_categories(self):
@@ -63,7 +67,9 @@ class TagMixin(object):
     def get_all_tags(self):
         return Tag.query.all()
 
-    def get_tags_by_ids(self, ids):
+    def get_tags(self, ids):
+        if ids is not set and ids isinstance(tuple, list):
+            ids = set(ids)
         return Tag.query.filter_by(id__in=ids).all()
 
     def create_tags(self, tags, post_id):
@@ -108,5 +114,7 @@ class LinkMixin(object):
     def get_all_links(self):
         return Link.query.all()
 
-    def get_links_by_ids(self, ids):
+    def get_links(self, ids):
+        if ids is not set and ids isinstance(tuple, list):
+            ids = set(ids)
         return Link.query.filter_by(id__in=ids).all()
