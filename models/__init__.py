@@ -55,7 +55,7 @@ class Post(db.Model):
         if not hasattr(self, '_tags'):
             ids = self.tag_ids.split('|')
             if ids:
-                ids = set([int(id) for in in ids])
+                ids = set([int(id) for id in ids])
             if ids:
                 self._tags = Tag.query.filter_by(id__in=ids).all()
             else:
