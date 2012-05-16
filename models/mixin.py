@@ -86,6 +86,8 @@ class TagMixin(object):
                 the_tag.title = tag
                 the_tag.slug = tag
                 the_tag.post_count = 1
+                db.session.add(the_tag)
+                db.session.commit()
             else:
                 the_tag.post_count += 1
             if not the_tag.post_ids:
