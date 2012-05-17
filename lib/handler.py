@@ -139,6 +139,11 @@ class BaseHandler(RequestHandler):
             return ' %s' % css
         return ''
 
+    def add_context(self, name, value):
+        setattr(self._context, name, value)
+
+    def add_filter(self, name, func):
+        setattr(self._filters, name, func)
 
     def _prepare_context(self):
         self._context = ObjectDict()
