@@ -113,7 +113,7 @@ def ubb(text):
         url = m.group(1)
         return '<div class="player"><embed class="mp3_player" src="/static/audio_player.swf?audio_file=%s&color=FFFFFF" width="207" height="60" type="application/x-shockwave-flash"></embed></div>' % url
 
-    pattern = re.compile(r'\[music\](\S+)\[/music\]', re.I)
+    pattern = re.compile(r'\[music\]([^\[\]]+)\[/music\]', re.I)
     text = pattern.sub(ubb_music, text)
 
     # ubb for xiami music
