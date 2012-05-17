@@ -7,7 +7,7 @@
 </div>
 <div class="sidebar span2">
     <h3>{{ _('Published') }}</h3>
-    <time class="updated" datetime="{{ xmldatetime(post.created) }}">{{ format_date(post.created) }}</time>
+    <time class="updated" datetime="{{ xmldatetime(post.created) }}">{{ post.created.strftime('%Y-%m-%d') }}</time>
     <h3>{{ _('Category') }}</h3>
     <span class="label">
         <a href="{{ post.category.permalink }}" title="{{ escape(post.category.title) }}">{{ escape(post.category.title) }}</a>
