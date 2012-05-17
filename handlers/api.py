@@ -165,7 +165,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         category_id = self.get_argument('category', None)
         tags = self.get_argument('tags', '')
         date = self.get_argument('date', None)
-        comment_open = bool(self.get_argument('comment_open', '1'))
+        comment_open = bool(int(self.get_argument('comment_open', '1')))
         if type not in [Post.TYPE_POST, Post.TYPE_PAGE]:
             type = Post.TYPE_POST
         if format not in ['standard', 'aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat']:
@@ -295,7 +295,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
             }
             self.write(json)
             return
-        quick = bool(self.get_argument('quick', '0'))
+        quick = bool(self.get_argument('quick', ''))
         type = self.get_argument('type', Post.TYPE_POST)
         title = self.get_argument('title', None)
         content = self.get_argument('content', '')
@@ -306,7 +306,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         category_id = self.get_argument('category', None)
         tags = self.get_argument('tags', '')
         date = self.get_argument('date', None)
-        comment_open = bool(self.get_argument('comment_open', '1'))
+        comment_open = bool(int(self.get_argument('comment_open', '1')))
         if type not in [Post.TYPE_POST, Post.TYPE_PAGE]:
             type = post.type
         if format not in ['standard', 'aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat']:
