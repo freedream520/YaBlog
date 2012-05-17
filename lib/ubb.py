@@ -110,7 +110,7 @@ def ubb(text):
 
     # ubb support for audio player
     def ubb_music(m):
-        url = m.group(2)
+        url = m.group(1)
         return '<div class="player"><embed class="mp3_player" src="/static/audio_player.swf?audio_file=%s&color=FFFFFF" width="207" height="60" type="application/x-shockwave-flash"></embed></div>' % url
 
     pattern = re.compile(r'\[music\](\S+)\[/music\]', re.I)
