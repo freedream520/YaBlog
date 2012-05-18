@@ -79,7 +79,7 @@ def ubb(text):
         content = m.group(1)
         return '<blockquote>%s</blockquote>' % content
 
-    pattern = re.compile(r'\[quote\](.+)\[/quote\]', re.I | re.M)
+    pattern = re.compile(r'\[quote\](.+)\[/quote\]', re.I | re.S)
     text = pattern.sub(ubb_quote, text)
 
     # ubb support for [pre]
@@ -87,7 +87,7 @@ def ubb(text):
         content = m.group(1)
         return '<pre>%s</pre>' % content
 
-    pattern = re.compile(r'\[pre\](.+)\[/pre\]', re.I | re.M)
+    pattern = re.compile(r'\[pre\](.+)\[/pre\]', re.I | re.S)
     text = pattern.sub(ubb_pre, text)
 
     # ubb support for [code]
@@ -105,7 +105,7 @@ def ubb(text):
         code = code.replace('\n\n', '\n&nbsp;\n').replace('\n', '<br />')
         return '\n\n<div class="code">%s</div>\n\n' % code
 
-    pattern = re.compile(r'\[code=([\w\-\+#]+)\](.+)\[/code\]', re.I | re.S | re.M)
+    pattern = re.compile(r'\[code=([\w\-\+#]+)\](.+)\[/code\]', re.I | re.S)
     text = pattern.sub(ubb_code, text)
 
     # ubb support for audio player

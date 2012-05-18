@@ -61,6 +61,7 @@ class TagPostListModule(UIModule, PageMixin):
         html = self.cache.get(key)
         if not html:
             ids = tag.post_ids.split('|')
+            ids = set([int(id) for id in ids if id and id.isdigit()])
             query = Post.query.filter_by(id__in=ids).order_by('-id')
             count = query.count()
             page = ObjectDict(self._get_pagination(query, count, count))

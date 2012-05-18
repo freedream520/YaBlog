@@ -83,8 +83,8 @@ class PostListApiHandler(BaseHandler, CategoryMixin):
                 'format' : post.format,
                 'excerpt' : post.excerpt,
                 'thumbnail' : post.thumbnail,
-                'created' : post.created.strftime('%Y-%m-%d %H:%M'),
-                'updated' : post.updated.strftime('%Y-%n-%d %H:%M'),
+                'created' : post.created.strftime('%Y-%m-%d %H:%M:%S'),
+                'updated' : post.updated.strftime('%Y-%n-%d %H:%M:%S'),
                 'views' : post.views,
                 'permalink' : post.permalink,
                 'comment_open' : post.comment_open,
@@ -127,8 +127,8 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
                 'format' : post.format,
                 'excerpt' : post.excerpt,
                 'thumbnail' : post.thumbnail,
-                'created' : post.created.strftime('%Y-%m-%d %H:%M'),
-                'updated' : post.updated.strftime('%Y-%n-%d %H:%M'),
+                'created' : post.created.strftime('%Y-%m-%d %H:%M:%S'),
+                'updated' : post.updated.strftime('%Y-%n-%d %H:%M:%S'),
                 'views' : post.views,
                 'permalink' : post.permalink,
                 'category' : {
@@ -202,15 +202,12 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
                 self.write(json)
                 return
         if date:
-            if not validators.date(date):
-                json = {
-                    'error' : 1,
-                    'msg' : self._('Date format is not correct')
-                }
-                self.write(json)
-                return
-            else:
+            if validators.date(date):
                 date = datetime.strptime(date, '%Y-%m-%d')
+            elif validators.datetime(date):
+                date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            else:
+                date = datetime.utcnow()
         else:
             date = datetime.utcnow()
         # now create post
@@ -343,15 +340,13 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
                 self.write(json)
                 return
         if date:
-            if not validators.date(date):
-                json = {
-                    'error' : 1,
-                    'msg' : self._('Date format is not correct')
-                }
-                self.write(json)
-                return
-            else:
+            if validators.date(date):
                 date = datetime.strptime(date, '%Y-%m-%d')
+            elif validators.datetime(date):
+                date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            else:
+                date = post.created
+
         # update post
         post.title = title
         post.slug = slug
