@@ -95,7 +95,7 @@ class TagMixin(object):
                 the_tag.post_ids = '%s' % post_id
             else:
                 ids = the_tag.post_ids.split('|')
-                ids.append(post_id)
+                ids.append(str(post_id))
                 ids = list(set(ids))
                 the_tag.post_ids = '|'.join(ids)
             db.session.add(the_tag)
@@ -103,7 +103,7 @@ class TagMixin(object):
                 post_tags = '%s' % the_tag.id
             else:
                 ids = post_tags.split('|')
-                ids.append(the_tag.id)
+                ids.append(str(the_tag.id))
                 ids = list(set(ids))
                 post_tags = '|'.join(ids)
         db.session.commit()
