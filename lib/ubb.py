@@ -50,7 +50,7 @@ def ubb(text):
         title = m.group(2)
         return '<h%s>%s</h%s>' % (n, title, n)
 
-    pattern = re.compile(r'\[h([1-6]){1}\](.+)\[/h\1\]', re.I)
+    pattern = re.compile(r'\[h([1-6]){1}\](.+?)\[/h\1\]', re.I)
     text = pattern.sub(ubb_html_title, text)
 
     # ubb support for [b] [u] [i] [del] [q] [p]
@@ -63,7 +63,7 @@ def ubb(text):
         content = m.group(2)
         return '<%s>%s</%s>' % (tp, content, tp)
 
-    pattern = re.compile(r'\[(b|u|i|d|s|q|p)\](.+)\[/\1\]', re.I)
+    pattern = re.compile(r'\[(b|u|i|d|s|q|p)\](.+?)\[/\1\]', re.I)
     text = pattern.sub(ubb_buidsqp, text)
 
     # ubb support for font awesome icons
@@ -79,7 +79,7 @@ def ubb(text):
         content = m.group(1)
         return '<blockquote>%s</blockquote>' % content
 
-    pattern = re.compile(r'\[quote\](.+)\[/quote\]', re.I | re.S)
+    pattern = re.compile(r'\[quote\](.+?)\[/quote\]', re.I | re.S)
     text = pattern.sub(ubb_quote, text)
 
     # ubb support for [pre]
@@ -87,7 +87,7 @@ def ubb(text):
         content = m.group(1)
         return '<pre>%s</pre>' % content
 
-    pattern = re.compile(r'\[pre\](.+)\[/pre\]', re.I | re.S)
+    pattern = re.compile(r'\[pre\](.+?)\[/pre\]', re.I | re.S)
     text = pattern.sub(ubb_pre, text)
 
     # ubb support for [code]
@@ -105,7 +105,7 @@ def ubb(text):
         code = code.replace('\n\n', '\n&nbsp;\n').replace('\n', '<br />')
         return '\n\n<div class="code">%s</div>\n\n' % code
 
-    pattern = re.compile(r'\[code=([\w\-\+#]+)\](.+)\[/code\]', re.I | re.S)
+    pattern = re.compile(r'\[code=([\w\-\+#]+)\](.+?)\[/code\]', re.I | re.S)
     text = pattern.sub(ubb_code, text)
 
     # ubb support for audio player
