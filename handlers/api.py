@@ -239,7 +239,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
             self.db.add(post)
             self.db.commit()
         # delete cache
-        keys = ['PostList:1', 'CategoryPostList:%s:1' % category.id, 'SystemStatus', 'ArchiveHTML']
+        keys = ['PostList:1', 'CategoryPostList:%s:1' % category.id, 'SystemStatus', 'ArchiveHTML', 'TagCloud']
         self.cache.delete_multi(keys)
 
         json = {
@@ -369,7 +369,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         self.db.add(post)
         self.db.commit()
         # delete cache
-        keys = ['PostList:1', 'CategoryPostList:%s:1' % category.id]
+        keys = ['PostList:1', 'CategoryPostList:%s:1' % post.category_id, 'TagCloud', 'ArchiveHTML']
         self.cache.delete_multi(keys)
 
         json = {

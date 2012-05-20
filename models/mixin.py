@@ -76,6 +76,7 @@ class TagMixin(object):
         post_tags = ''
         if tags is str:
             tags = tags.split(',')
+        tags = set(tags)
         for tag in tags:
             tag = tag.strip()
             if not tag:
@@ -93,15 +94,18 @@ class TagMixin(object):
             if not the_tag.post_ids:
                 the_tag.post_ids = '%s' % post_id
             else:
-                ids = the_tag.post_ids.split('|').append(post_id)
-                if ids:
-                    ids = list(set(ids))
-                    the_tag.post_ids = '|'.join(ids)
+                ids = the_tag.post_ids.split('|')
+                ids.append(post_id)
+                ids = list(set(ids))
+                the_tag.post_ids = '|'.join(ids)
             db.session.add(the_tag)
             if post_tags == '':
                 post_tags = '%s' % the_tag.id
             else:
-                post_tags = '%s|%s' % (post_tags, the_tag.id)
+                ids = post_tags.split('|')
+                ids.append(the_tag.id)
+                ids = list(set(ids))
+                post_tags = '|'.join(ids)
         db.session.commit()
         return post_tags
 

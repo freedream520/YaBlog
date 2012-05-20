@@ -27,3 +27,16 @@
         {% end %}
     </tbody>
 </table>
+{% if page.page_number > 1%}
+<footer class="pagination">
+    <ul>
+    {% for i in page.pagelist %}
+    {% if i == int(page.current_page) %}
+        <li class="active"><a href="?p={{i}}">{{i}}</a></li>
+    {% else %}
+        <li><a href="?p={{i}}">{{i}}</a></li>
+    {% end %}
+    {% end %}
+    </ul>
+</footer>
+{% end %}
