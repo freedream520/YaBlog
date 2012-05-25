@@ -12,7 +12,7 @@ define('version',1.0)
 # server config
 define('port',8002)
 define('debug',True)
-define('master','mysql://messense:ilovecc@localhost:3306/messense_blog?charset=utf8')
+define('master','mysql://demo:demo@localhost:3306/demo_blog?charset=utf8')
 define('slaves',[])
 # cache config
 define('cache', 'memcache')
@@ -37,23 +37,16 @@ define('cookie_secret','QkiIjc2rT+GlhhTBaBAQNLybcuOIj0j8lKN/LW8rrHA=')
 define('password_secret', 'cici')
 
 # admin setting
-define('admin_username', 'messense')
-define('admin_password', 'ilovecc.in')
-define('admin_nickname', 'messense')
+define('admin_username', 'demo')
+define('admin_password', 'demo')
+define('admin_nickname', 'demo')
 
 # mail setting
 define('mail_notify', False)
 define('mail_host', 'smtp.gmail.com:587')
-define('mail_username', 'wapdevelop@gmail.com')
-define('mail_password', 'anwigfcmktrsknel')
-define('mail_from_addr', 'wapdevelop@gmail.com')
-
-# Gravatar config
-define('gravatar_base_url','http://ruby-china.org/avatar/')
-define('gravatar_extra','')
-
-# emoji
-define('emoji_url', '')
+define('mail_username', 'xxx@gmail.com')
+define('mail_password', '')
+define('mail_from_addr', 'xxx@gmail.com')
 
 # duoshuo
 define('duoshuo_shortname', 'messense')
