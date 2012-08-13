@@ -1,5 +1,0 @@
-<ul class="posts">
-    {% for post in page.datalist %}
-    <li class="post"><span>{{ post.created.strftime('%Y-%m-%d') }}</span> —— <a href="{{ post.permalink }}" title="{{ escape(post.title) }}">{{ post.title }}</a></li>
-    {% end %}
-</ul>
