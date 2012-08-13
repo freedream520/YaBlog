@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block subtitle %}{{ escape(page.title) }}{% end %}
+{% block header %}
+<h1>{{ escape(page.title) }}</h1>
+{% end %}
+{% block entry %}
+    <div class="page">
+        <div class="entry">
+            {{ page.html }}
+        </div>
+        {% if page.comment_open %}
+        <div class="ds-thread"></div>
+        <script type="text/javascript">
+        var duoshuoQuery = {short_name:"{{ context.duoshuo_shortname }}"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';
+            ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+        {% end %}
+    </div>
+{% end %}

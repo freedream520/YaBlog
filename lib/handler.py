@@ -17,16 +17,16 @@ from pygments.formatters import HtmlFormatter
 from lib.util import ObjectDict, create_token
 from lib.filters import xmldatetime, wrap_content
 
-class BaseHandler(RequestHandler):
+class AppHandler(RequestHandler):
 
     _first_run = True
 
     def initialize(self):
-        if BaseHandler._first_run:
-            BaseHandler._first_run = False
+        if AppHandler._first_run:
+            AppHandler._first_run = False
 
     def finish(self, chunk=None):
-        super(BaseHandler,self).finish(chunk)
+        super(AppHandler,self).finish(chunk)
         if self.get_status() == 500:
             try:
                 self.db.commit()
@@ -46,34 +46,9 @@ class BaseHandler(RequestHandler):
     def cache(self):
         return self.application.cache
 
-    def prepare(self):
-        self._prepare_context()
-        self._prepare_filters()
-
-    def render_string(self, template_name, **kwargs):
-        kwargs.update(self._filters)
-        assert "context" not in kwargs, "context is a reserved keyword."
-        kwargs["context"] = self._context
-        return super(BaseHandler, self).render_string(template_name,**kwargs)
-    
-    def write(self, chunk):
-        if isinstance(chunk, dict):
-            chunk = escape.json_encode(chunk)
-            callback = self.get_argument('callback', None)
-            if callback:
-                chunk = "%s{%s}" % (callback, escape.to_unicode(chunk))
-            self.set_header("Content-Type","application/javascript; charset=UTF-8")
-        super(BaseHandler, self).write(chunk)
-
-    def get_current_user(self):
-        cookie = self.get_secure_cookie('token')
-        if not cookie:
-            return None
-        token = hashlib.md5(options.admin_username).hexdigest()
-        if cookie != token:
-            self.clear_cookie('token')
-            return None
-        return True
+    # locale translate alias
+    def _(self, content):
+        return self.locale.translate(content)
 
     def get_error_html(self, status_code, **kwargs):
         if not options.debug:
@@ -96,7 +71,8 @@ class BaseHandler(RequestHandler):
 
             css = HtmlFormatter().get_style_defs('.highlight')
             exception = kwargs.get('exception', None)
-            return self.render_string('exception.html', 
+            exception_template = os.path.join(self.settings['template_path'], 'exception.html')
+            return self.render_string(exception_template, 
                                       get_snippet=get_snippet,
                                       css=css,
                                       exception=exception,
@@ -126,6 +102,22 @@ class BaseHandler(RequestHandler):
     @property
     def user_agent(self):
         return self.request.headers.get("User-Agent", "bot")
+
+
+class BaseHandler(AppHandler):
+
+    def prepare(self):
+        self._prepare_context()
+        self._prepare_filters()
+
+    def render_string(self, template_name, **kwargs):
+        kwargs.update(self._filters)
+        assert "context" not in kwargs, "context is a reserved keyword."
+        kwargs["context"] = self._context
+        return super(BaseHandler, self).render_string(template_name,**kwargs)
+
+    def get_template_path(self):
+        return os.path.join(self.settings['template_path'], self.settings.get('theme_name', 'default'))
 
     def print_form_error(self, field, css_class='form-error'):
         if field and hasattr(self._context.form, field):
@@ -177,9 +169,48 @@ class BaseHandler(RequestHandler):
     def form_error(self, field, msg=''):
         setattr(self._context.form, field, msg)
 
-    # locale translate alias
-    def _(self, content):
-        return self.locale.translate(content)
+class DashboardHandler(BaseHandler):
+
+    def get_current_user(self):
+        cookie = self.get_secure_cookie('token')
+        if not cookie:
+            return None
+        token = hashlib.md5(options.admin_username).hexdigest()
+        if cookie != token:
+            self.clear_cookie('token')
+            return None
+        return True
+
+    def get_template_path(self):
+        return self.settings.get('template_path')
+
+class ApiHandler(AppHandler):
+
+    xsrf_protect = False
+
+    def check_xsrf_cookie(self):
+        if not self.xsrf_protect:
+            return
+        return super(ApiHandler, self).check_xsrf_cookie()
+
+    def get_current_user(self):
+        cookie = self.get_secure_cookie('token')
+        if not cookie:
+            return None
+        token = hashlib.md5(options.admin_username).hexdigest()
+        if cookie != token:
+            self.clear_cookie('token')
+            return None
+        return True
+    
+    def write(self, chunk):
+        if isinstance(chunk, dict):
+            chunk = escape.json_encode(chunk)
+            callback = self.get_argument('callback', None)
+            if callback:
+                chunk = "%s{%s}" % (callback, escape.to_unicode(chunk))
+            self.set_header("Content-Type","application/javascript; charset=UTF-8")
+        super(ApiHandler, self).write(chunk)
 
 class UIModule(web.UIModule):
 

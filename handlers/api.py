@@ -9,14 +9,14 @@ from datetime import datetime
 
 from tornado.options import options
 
-from lib.handler import BaseHandler
+from lib.handler import ApiHandler
 from lib.filters import wrap_content
 from lib import validators
 
 from models import Post, Category, Tag, Link
 from models.mixin import PostMixin, CategoryMixin, TagMixin, LinkMixin
 
-class PostListApiHandler(BaseHandler, CategoryMixin):
+class PostListApiHandler(ApiHandler, CategoryMixin):
 
     """
     List posts.
@@ -103,7 +103,7 @@ class PostListApiHandler(BaseHandler, CategoryMixin):
             }
         self.write(json)
 
-class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
+class PostApiHandler(ApiHandler, PostMixin, CategoryMixin, TagMixin):
 
     """
     Get a post by id
@@ -437,7 +437,7 @@ class PostApiHandler(BaseHandler, PostMixin, CategoryMixin, TagMixin):
         }
         self.write(json)
 
-class CategoryListApiHandler(BaseHandler):
+class CategoryListApiHandler(ApiHandler):
 
     """
     List categories
@@ -468,7 +468,7 @@ class CategoryListApiHandler(BaseHandler):
         }
         self.write(json)
 
-class CategoryApiHandler(BaseHandler, CategoryMixin):
+class CategoryApiHandler(ApiHandler, CategoryMixin):
 
     """
     Get a category info
@@ -662,7 +662,7 @@ class CategoryApiHandler(BaseHandler, CategoryMixin):
         }
         self.write(json)
 
-class TagListApiHandler(BaseHandler):
+class TagListApiHandler(ApiHandler):
 
     """
     List tags
@@ -692,7 +692,7 @@ class TagListApiHandler(BaseHandler):
         }
         self.write(json)
 
-class TagApiHandler(BaseHandler, TagMixin):
+class TagApiHandler(ApiHandler, TagMixin):
 
     """
     Get tag info
@@ -894,7 +894,7 @@ class TagApiHandler(BaseHandler, TagMixin):
         }
         self.write(json)
 
-class LinkListApiHandler(BaseHandler):
+class LinkListApiHandler(ApiHandler):
 
     """
     List links
@@ -923,7 +923,7 @@ class LinkListApiHandler(BaseHandler):
         }
         self.write(json)
 
-class LinkApiHandler(BaseHandler):
+class LinkApiHandler(ApiHandler):
 
     """
     Get link info

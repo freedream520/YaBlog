@@ -7,7 +7,7 @@
     Can you hear me?
 """
 from models import Post, Category, Tag, Link
-from config import db
+from lib.database import db
 
 class PostMixin(object):
 

@@ -10,51 +10,44 @@ from tornado.options import define,options
 
 define('version',1.0)
 # server config
-define('port',8002)
-define('debug',True)
-define('master','mysql://demo:demo@localhost:3306/demo_blog?charset=utf8')
-define('slaves',[])
+define('port', type=int, default=8002)
+define('debug', type=bool, default=True)
+define('master', type=str, default='mysql://demo:demo@localhost:3306/demo_blog?charset=utf8')
+define('slaves', type=list, default=[])
 # cache config
-define('cache', 'memcache')
-define('memcache', '127.0.0.1:11211')
-define('redis_host', '')
-define('redis_port', 6379)
-define('redis_db', 0)
-define('redis_password', '')
-define('redis_socket_timeout', None)
+define('cache', type=str, default='memcache')
+define('memcache', type=str, default='127.0.0.1:11211')
+define('redis_host', type=str, default='')
+define('redis_port', type=int, default=6379)
+define('redis_db', type=int, default=0)
+define('redis_password', type=str, default='')
+define('redis_socket_timeout', type=int, default=None)
 
 # site config
-define('sitename','Messense')
-define('siteurl','http://messense.me')
-define('login_url','/dashboard/login')
-define('static_path',os.path.join(PROJDIR,'static'))
-define('static_url_prefix','/static/')
-define('template_path',os.path.join(PROJDIR,'templates'))
-define('locale_path',os.path.join(PROJDIR,'locale'))
-define('default_locale','zh_CN')
-define('xsrf_cookies',False)
-define('cookie_secret','QkiIjc2rT+GlhhTBaBAQNLybcuOIj0j8lKN/LW8rrHA=')
-define('password_secret', 'cici')
+define('sitename', type=str, default='Messense')
+define('siteurl', type=str, default='http://messense.me')
+define('login_url', type=str, default='/dashboard/login')
+define('static_path', type=str, default=os.path.join(PROJDIR,'static'))
+define('static_url_prefix', type=str, default='/static/')
+define('template_path', type=str, default=os.path.join(PROJDIR,'templates'))
+define('locale_path', type=str, default=os.path.join(PROJDIR,'locale'))
+define('default_locale', type=str, default='zh_CN')
+define('xsrf_cookies', type=bool, default=False)
+define('cookie_secret', type=str, default='QkiIjc2rT+GlhhTBaBAQNLybcuOIj0j8lKN/LW8rrHA=')
+define('password_secret', type=str, default='cici')
+
+# theme setting
+define('theme_name',  type=str, default='default')
 
 # admin setting
-define('admin_username', 'demo')
-define('admin_password', 'demo')
-define('admin_nickname', 'demo')
-
-# mail setting
-define('mail_notify', False)
-define('mail_host', 'smtp.gmail.com:587')
-define('mail_username', 'xxx@gmail.com')
-define('mail_password', '')
-define('mail_from_addr', 'xxx@gmail.com')
+define('admin_username', type=str, default='demo')
+define('admin_password', type=str, default='demo')
+define('admin_nickname', type=str, default='demo')
 
 # duoshuo
-define('duoshuo_shortname', 'messense')
+define('duoshuo_shortname', type=str, default='messense')
 
-# init db
-from lib.database import SQLAlchemy
-db = SQLAlchemy(options.master, options.slaves, echo=options.debug, convert_unicode=True)
-
+# init  cache
 cache = None
 if options.cache:
     if options.cache == 'memcache':

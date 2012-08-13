@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{ _(context.sitename) }}</title>
+        <link>{{ context.siteurl }}</link>
+        <description>时间万岁，我总会无力伤悲</description>
+        <language>zh-cn</language>
+        {% set last = posts.pop(0) %}
+        <lastBuildDate>{{ format_feed_date(last.created) }}</lastBuildDate>
+        <generator>YaBlog</generator>
+        <item>
+            <title>{{ escape(last.title) }}</title>
+            <link>{{ last.permalink }}</link>
+            <category><![CDATA[{{ last.category.title }}]]></category>
+            <description><![CDATA[{{ last.html }}]]></description>
+            <guid isPermaLink="true">{{ last.permalink }}</guid>
+            <pubDate>{{ format_feed_date(last.created) }}</pubDate>
+        </item>
+        {% for post in posts %}
+        <item>
+            <title>{{ escape(post.title) }}</title>
+            <link>{{ post.permalink }}</link>
+            <category><![CDATA[{{ post.category.title }}]]></category>
+            <description><![CDATA[{{ post.html }}]]></description>
+            <guid isPermaLink="true">{{ post.permalink }}</guid>
+            <pubDate>{{ format_feed_date(post.created) }}</pubDate>
+        </item>
+        {% end %}
+    </channel>
+</rss>

@@ -1,0 +1,7 @@
+<ul class="tag-box">
+{% for category in categories %}
+    <li>
+        <a href="{{ category.permalink }}" title="{{ escape(category.description) }}">{{ escape(category.title) }} <span>{{ category.post_count }}</span></a>
+    </li>
+{% end %}
+</ul>

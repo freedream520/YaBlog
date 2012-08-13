@@ -9,7 +9,7 @@ import hashlib
 
 from tornado.options import options
 
-from lib.handler import BaseHandler, UIModule
+from lib.handler import DashboardHandler, UIModule
 from lib.filters import wrap_content
 from lib.decorators import require_admin
 from lib.util import create_token, PageMixin, ObjectDict
@@ -17,7 +17,7 @@ from lib.util import create_token, PageMixin, ObjectDict
 from models import Post, Category, Tag, Link
 from models.mixin import PostMixin, CategoryMixin, TagMixin, LinkMixin
 
-class DashboardLoginHandler(BaseHandler):
+class DashboardLoginHandler(DashboardHandler):
 
     def prepare(self):
         super(DashboardLoginHandler, self).prepare()
@@ -49,19 +49,19 @@ class DashboardLoginHandler(BaseHandler):
         self.set_secure_cookie('token', token)
         self.redirect('/dashboard')
 
-class DashboardIndexHandler(BaseHandler):
+class DashboardIndexHandler(DashboardHandler):
     
     @require_admin
     def get(self):
         self.render('dashboard/index.html')
 
-class DashboardCategoryListHandler(BaseHandler, CategoryMixin):
+class DashboardCategoryListHandler(DashboardHandler, CategoryMixin):
 
     @require_admin
     def get(self):
         self.render('dashboard/categories.html', categories=self.get_all_categories())
 
-class DashboardPostListHandler(BaseHandler, PageMixin):
+class DashboardPostListHandler(DashboardHandler, PageMixin):
 
     @require_admin
     def get(self):
@@ -70,13 +70,13 @@ class DashboardPostListHandler(BaseHandler, PageMixin):
         page = ObjectDict(self._get_pagination(query, query.count(), 10))
         self.render('dashboard/posts.html', page=page)
 
-class DashboardPageListHandler(BaseHandler, PostMixin):
+class DashboardPageListHandler(DashboardHandler, PostMixin):
 
     @require_admin
     def get(self):
         self.render('dashboard/pages.html', pages=self.get_all_pages())
 
-class DashboardTagListHandler(BaseHandler, PageMixin):
+class DashboardTagListHandler(DashboardHandler, PageMixin):
 
     @require_admin
     def get(self):
@@ -85,19 +85,19 @@ class DashboardTagListHandler(BaseHandler, PageMixin):
         page = ObjectDict(self._get_pagination(query, query.count(), 10))
         self.render('dashboard/tags.html', page=page)
 
-class DashboardLinkListHandler(BaseHandler, LinkMixin):
+class DashboardLinkListHandler(DashboardHandler, LinkMixin):
 
     @require_admin
     def get(self):
         self.render('dashboard/links.html', links=self.get_all_links())
 
-class DashboardCreatePostHandler(BaseHandler, CategoryMixin):
+class DashboardCreatePostHandler(DashboardHandler, CategoryMixin):
 
     @require_admin
     def get(self):
         self.render('dashboard/create_post.html', categories=self.get_all_categories())
 
-class DashboardEditPostHandler(BaseHandler, PostMixin, CategoryMixin):
+class DashboardEditPostHandler(DashboardHandler, PostMixin, CategoryMixin):
 
     @require_admin
     def get(self, id):
@@ -107,13 +107,13 @@ class DashboardEditPostHandler(BaseHandler, PostMixin, CategoryMixin):
             return
         self.render('dashboard/edit_post.html', post=post, categories=self.get_all_categories())
 
-class DashboardCreatePageHandler(BaseHandler):
+class DashboardCreatePageHandler(DashboardHandler):
 
     @require_admin
     def get(self):
         self.render('dashboard/create_page.html')
 
-class DashboardEditPageHandler(BaseHandler, PostMixin):
+class DashboardEditPageHandler(DashboardHandler, PostMixin):
 
     @require_admin
     def get(self, id):
@@ -138,7 +138,7 @@ handlers = [
 ]
 
 class SystemStatusModule(UIModule):
-    def render(self, tpl="modules/system_status.html"):
+    def render(self, tpl="dashboard/system_status.html"):
         key = 'SystemStatus'
         html = self.cache.get(key)
         if not html:

@@ -30,13 +30,17 @@ class Application(web.Application):
                 login_url = options.login_url
             )
             super(Application,self).__init__(handlers,**settings)
-            Application.db = config.db.session
+            from lib.database import db
+            Application.db = db.session
             Application.cache = config.cache
             tornado.locale.load_translations(options.locale_path)
             tornado.locale.set_default_locale(options.default_locale)
 
 def main():
-    define('setting','')
+    if options.debug:
+        define('setting', '/home/messense/config/messense.conf')
+    else:
+        define('setting','')
     tornado.options.parse_command_line()
     parse_config_file(options.setting)
     server = HTTPServer(Application(),xheaders = True)

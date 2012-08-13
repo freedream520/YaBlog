@@ -13,7 +13,7 @@ from sqlalchemy import Integer,String,DateTime,Text, Boolean
 from sqlalchemy.orm import relationship, backref
 from tornado.options import options
 
-from config import db
+from lib.database import db
 
 class Tag(db.Model):
 

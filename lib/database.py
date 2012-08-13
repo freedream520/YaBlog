@@ -14,6 +14,7 @@ from sqlalchemy.orm.util import _entity_descriptor
 from sqlalchemy.util import to_list
 from sqlalchemy.sql import operators, extract
 from tornado.ioloop import PeriodicCallback
+from tornado.options import options
 
 """
 DjangoQuery From
@@ -203,3 +204,6 @@ class SQLAlchemy(object):
 
     def create_db(self):
         self.Model.metadata.create_all(self.engine)
+
+# init db
+db = SQLAlchemy(options.master, options.slaves, echo=options.debug, convert_unicode=True)
