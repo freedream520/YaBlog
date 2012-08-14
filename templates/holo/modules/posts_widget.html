@@ -1,0 +1,7 @@
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="{{ post.permalink }}" title="{{ escape(post.title) }}"><span>{{ escape(post.title) }}</span></a>
+    </li>
+    {% end %}
+</ul>

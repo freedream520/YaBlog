@@ -1,0 +1,7 @@
+<ul>
+{% for category in categories %}
+    <li  id="cat-item-{{ category.id }}" class="cat-item">
+        <a href="{{ category.permalink }}" title="{{ escape(category.title) }}">{{ escape(category.title) }}</a> ({{ category.post_count }})
+    </li>
+{% end %}
+</ul>

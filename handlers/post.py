@@ -5,6 +5,8 @@
     I love cici.
     时间万岁，我总会无力伤悲
 """
+from tornado.options import options
+
 from lib.handler import BaseHandler, UIModule
 from lib.util import ObjectDict, PageMixin
 
@@ -18,6 +20,9 @@ class PostHandler(BaseHandler, PostMixin):
         if not post:
             self.send_error(404)
             return
+        post.views += 1
+        self.db.add(post)
+        self.db.commit()
         if post.type == Post.TYPE_POST:
             self.render('post.html', post=post)
         elif post.type == Post.TYPE_PAGE:
@@ -36,7 +41,7 @@ class PostListModule(UIModule, PageMixin):
         if not html:
             query = Post.query.filter_by(type=Post.TYPE_POST).order_by('-id')
             count = query.count()
-            page = ObjectDict(self._get_pagination(query, count, 10))
+            page = ObjectDict(self._get_pagination(query, count, options.post_per_page))
             html = self.render_string(tpl, page=page)
             self.cache.set(key, html, 3600)
         return html
@@ -49,7 +54,7 @@ class CategoryPostListModule(UIModule, PageMixin):
         if not html:
             query = Post.query.filter_by(type=Post.TYPE_POST, category_id=category.id).order_by('-id')
             count = query.count()
-            page = ObjectDict(self._get_pagination(query, count, count))
+            page = ObjectDict(self._get_pagination(query, count, options.post_per_page))
             html = self.render_string(tpl, page=page)
             self.cache.set(key, html, 3600)
         return html
@@ -64,13 +69,24 @@ class TagPostListModule(UIModule, PageMixin):
             ids = set([int(id) for id in ids if id and id.isdigit()])
             query = Post.query.filter_by(id__in=ids).order_by('-id')
             count = query.count()
-            page = ObjectDict(self._get_pagination(query, count, count))
+            page = ObjectDict(self._get_pagination(query, count, options.post_per_page))
             html = self.render_string(tpl, page=page)
+            self.cache.set(key, html, 3600)
+        return html
+
+class PopularPostsWidget(UIModule):
+    def render(self, count, tpl="modules/posts_widget.html"):
+        key = "PopularPostsWidget"
+        html = self.cache.get(key)
+        if not html:
+            query = Post.query.filter_by(type=Post.TYPE_POST).order_by('-views').limit(count)
+            html = self.render_string(tpl, posts=query)
             self.cache.set(key, html, 3600)
         return html
 
 ui_modules = {
     'PostListModule' : PostListModule,
     'CategoryPostListModule' : CategoryPostListModule,
-    'TagPostListModule' : TagPostListModule
+    'TagPostListModule' : TagPostListModule,
+    'PopularPostsWidget' : PopularPostsWidget,
 }

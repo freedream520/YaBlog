@@ -40,6 +40,17 @@ class CategoryListModule(UIModule, CategoryMixin):
             self.cache.set(key, html, 3600)
         return html
 
+class CategoryListWidget(UIModule, CategoryMixin):
+    def render(self, tpl="modules/category_list_widget.html"):
+        key = "CategoryListWidget"
+        html = self.cache.get(key)
+        if not html:
+            categories = self.get_all_categories()
+            html = self.render_string(tpl, categories=categories)
+            self.cache.set(key, html, 3600)
+        return html
+
 ui_modules = {
     'CategoryListModule' : CategoryListModule,
+    'CategoryListWidget' : CategoryListWidget,
 }

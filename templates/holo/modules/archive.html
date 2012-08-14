@@ -1,0 +1,22 @@
+{% for post in posts %}
+<div class="post_wrap clearfix">
+    <div id="post-{{ post.id }}" class="post">
+        <h3 class="title"><a href="{{ post.permalink }}" title="{{ escape(post.title) }}">{{ post.title }}</a></h3>
+        <div class="post_content">
+            {{ post.html }}
+        </div>
+        <div class="post_meta">
+            <ul class="clearfix">
+                <li><a href="{{ post.category.permalink }}" title="{{ escape(post.category.title) }}">{{ escape(post.category.title) }}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="meta">
+        <ul>
+            <li class="post_date">{{ post.created.strftime('%Y/%m/%d') }}</li>
+            <li class="post_views">{{ _('%s views') % post.views }}</li>
+            <li class="post_tags">{{ post.tags_link }}</li>
+        </ul>
+    </div>
+</div>
+{% end %}

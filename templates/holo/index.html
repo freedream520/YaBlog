@@ -1,0 +1,5 @@
+{% extends "layout.html" %}
+{% block title %}{{ _(context.sitename) }}{% end %}
+{% block left_col %}
+    {% module PostListModule() %}
+{% end %}

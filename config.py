@@ -26,6 +26,7 @@ define('redis_socket_timeout', type=int, default=None)
 # site config
 define('sitename', type=str, default='Messense')
 define('siteurl', type=str, default='http://messense.me')
+define('description', type=str, default='')
 define('login_url', type=str, default='/dashboard/login')
 define('static_path', type=str, default=os.path.join(PROJDIR,'static'))
 define('static_url_prefix', type=str, default='/static/')
@@ -38,6 +39,7 @@ define('password_secret', type=str, default='cici')
 
 # theme setting
 define('theme_name',  type=str, default='default')
+define('post_per_page', type=int, default=10)
 
 # admin setting
 define('admin_username', type=str, default='demo')

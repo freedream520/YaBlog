@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block subtitle %}{{ _('Categories') }}{% end %}
+{% block left_col %}
+<div id="single" class="post_wrap">
+    <div id="categories" class="post">
+    {% module CategoryListModule() %}
+    </div>
+</div>
+{% end %}

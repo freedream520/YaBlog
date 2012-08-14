@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block subtitle %}{{ _('Tags') }}{% end %}
+{% block left_col %}
+<div id="single" class="post_wrap">
+    <div id="tags" class="post">
+    {% module TagCloudModule() %}
+    </div>
+</div>
+{% end %}

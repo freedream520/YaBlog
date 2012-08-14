@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block subtitle %}{{ escape(page.title) }}{% end %}
+{% block left_col %}
+<div id="bread_crumb">
+    <ul class="clearfix">
+        <li id="bc_home">
+            <a href="/" title="{{ _('Home') }}">{{ _('Home') }}</a>
+        </li>
+        <li class="last">{{ escape(page.title) }}</li>
+    </ul>
+</div>
+<div id="single" class="post_wrap">
+    <div id="post-{{ page.id }}" class="post">
+        <h3 class="title">{{ page.title }}</h3>
+        <div class="post_content">
+            {{ page.html }}
+        </div>
+    </div>
+    <div class="meta">
+        <ul>
+            <li class="post_date">{{ page.created.strftime('%Y/%m/%d') }}</li>
+            <li class="post_views">{{ _('%s views') % page.views }}</li>
+        </ul>
+    </div>
+</div>
+<div id="comments_wrapper">
+    <div id="comments">
+        <div id="comment_area">
+    {% if page.comment_open %}
+    <div class="ds-thread"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"{{ context.duoshuo_shortname }}"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    {% end %}
+        </div>
+    </div>
+</div>
+{% end %}

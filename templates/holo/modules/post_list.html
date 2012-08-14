@@ -1,0 +1,45 @@
+{% for post in page.datalist %}
+<div class="post_wrap clearfix">
+    <div id="post-{{ post.id }}" class="post">
+        <h3 class="title"><a href="{{ post.permalink }}" title="{{ escape(post.title) }}">{{ post.title }}</a></h3>
+        <div class="post_content">
+            {{ post.post_excerpt }}
+            <p style="text-align:right;">
+                <a href="{{ post.permalink }}" title="{{ _('Read More') }}" class="more-link">{{ _('Read More') }}</a>
+            </p>
+        </div>
+        <div class="post_meta">
+            <ul class="clearfix">
+                <li><a href="{{ post.category.permalink }}" title="{{ escape(post.category.title) }}">{{ escape(post.category.title) }}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="meta">
+        <ul>
+            <li class="post_date">{{ post.created.strftime('%Y/%m/%d') }}</li>
+            <li class="post_views">{{ _('%s views') % post.views }}</li>
+            <li class="post_tags">{{ post.tags_link }}</li>
+        </ul>
+    </div>
+</div>
+{% end %}
+{% if page.page_number > 1%}
+<div id="page_navi">
+    <h4>{{ _('Page Navigation') }}</h4>
+    <ul class="page-numbers">
+        {% if page.current_page > 1 %}
+        <li><a class="page-numbers prev" href="?p={{ page.current_page - 1 }}">«</a></li>
+        {% end %}
+        {% for i in page.pagelist %}
+        {% if i == int(page.current_page) %}
+        <li><span class="page-numbers current">{{ i }}</span></li>
+        {% else %}
+        <li><a class="page-numbers" href="?p={{ i }}">{{ i }}</a></li>
+        {% end %}
+        {% end %}
+        {% if page.page_number > page.current_page %}
+        <li><a class="page-numbers next" href="?p={{ page.current_page + 1 }}">»</a></li>
+        {% end %}
+    </ul>
+</div>
+{% end %}

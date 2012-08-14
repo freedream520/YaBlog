@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}{% block subtitle %}{% end %} | {{ _(context.sitename) }}{% end %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+        <meta name="author" content="{% block author %}{% end %}" />
+        <meta name="description" content="{% block description %}{% end %}" />
+        <link rel="alternate" type="application/rss+xml" title="{{ _('RSS Feed') }}" href="/feed" />
+        <link rel="stylesheet" type="text/css" href="{{ static_url('css/holo.css') }}" />
+        {% block afterstyle %}{% end %}
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!--[if IE 6]>
+        <script type="text/javascript" src="http://letskillie6.googlecode.com/svn/trunk/letskillie6.zh_CN.pack.js"></script>
+        <![endif]-->
+        {% block afterhead %}{% end %}
+    </head>
+    <body>
+        <header id="header">
+            <div class="header_menu">
+                <ul class="menu">
+                    <li class="menu-item"><a href="/category/mess" title="杂七杂八">杂七杂八</a></li>
+                    <li class="menu-item"><a href="/category/wordpress" title="WordPress">WordPress</a></li>
+                    <li class="menu-item"><a href="/category/python" title="Python">Python</a></li>
+                    <li class="menu-item"><a href="/category/tucao" title="吐槽">吐槽</a></li>
+                    <li class="menu-item"><a href="/category/web" title="Web前端">Web前端</a></li>
+                    <li class="menu-item"><a href="/archive" title="{{ _('Archive') }}">{{ _('Archive') }}</a></li>
+                    <li class="menu-item"><a href="/links" title="{{ _('Links') }}">{{ _('Links') }}</a></li>
+                    <li class="menu-item"><a href="/guestbook" title="{{ _('Guestbook') }}">{{ _('Guestbook') }}</a></li>
+                    <li class="menu-item"><a href="/about" title="{{ _('About') }}">{{ _('About') }}</a></li>
+                </ul>
+            </div>
+            <h1 id="logo_text">
+                <a href="{{ _(context.siteurl) }}" title="{{ _(context.sitename) }}">{{ _(context.sitename) }}</a>
+            </h1>
+            <h2 id="site_description">{{ _(context.description) }}</h2>
+        </header>
+        <section id="main_content" class="clearfix">
+            <div id="left_col">
+                {% block left_col %}{% end %}
+            </div>
+            <div id="container"></div>
+            <div id="right_col">
+                {% block right_col %}
+                <div id="info_area2">
+                    <div class="side_box clearfix">
+                        <h3 class="side_title">{{ _('About me') }}</h3>
+                        <div class="desc">
+                            A coder, a universty student.
+                        </div>
+                    </div>
+                </div>
+                <div id="side_top">
+                    <div class="side_box">
+                        <h3 class="side_title">{{ _('Categories') }}</h3>
+                        {% module CategoryListWidget() %}
+                    </div>
+                    <div class="side_box">
+                        <h3 class="side_title">{{ _('Popular Posts') }}</h3>
+                        {% module PopularPostsWidget(10) %}
+                    </div>
+                    <div class="side_box">
+                        <h3 class="side_title">{{ _('Links') }}</h3>
+                        {% module LinkWidget(20) %}
+                    </div>
+                </div>
+                <div id="side_middle" class="clearfix">
+                    <div id="side_left"></div>
+                    <div id="side_right"></div>
+                </div>
+                <div id="side_bottom"></div>
+                {% end %}
+            </div>
+            <div id="footer">
+                <ul id="copyright">
+                    <li>CopyRight &copy; 2011 - 2012</li>
+                    <li>Theme designed by <a href="http://yzk.me" title="Taurry" target="_blank">Taurry</a></li>
+                    <li class="last">Proudly powerred by <a href="http://github.com/messense/YaBlog" title="YaBlog on Github" target="_blank">YaBlog</a></li>
+                </ul>
+            </div>
+        </section>
+        <div id="return_top">
+            <a href="#header">Return Top</a>
+        </div>
+    </body>
+</html>

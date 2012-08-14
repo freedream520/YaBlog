@@ -1,0 +1,7 @@
+<ul class="links">
+    {% for link in links %}
+    <li class="link" id="link-{{ link.id }}">
+        <a target="_blank" href="{{ link.url }}" title="{{ escape(link.description) }}">{{ escape(link.title) }}</a>
+    </li>
+    {% end %}
+</ul>

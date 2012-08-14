@@ -117,7 +117,7 @@ class BaseHandler(AppHandler):
         return super(BaseHandler, self).render_string(template_name,**kwargs)
 
     def get_template_path(self):
-        return os.path.join(self.settings['template_path'], self.settings.get('theme_name', 'default'))
+        return os.path.join(options.template_path, options.theme_name)
 
     def print_form_error(self, field, css_class='form-error'):
         if field and hasattr(self._context.form, field):
@@ -143,6 +143,7 @@ class BaseHandler(AppHandler):
         self._context.version = options.version
         self._context.sitename = options.sitename
         self._context.siteurl = options.siteurl
+        self._context.description = options.description
         self._context.debug = options.debug
         self._context.duoshuo_shortname = options.duoshuo_shortname
         self._context.message = []

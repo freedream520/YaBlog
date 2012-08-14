@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block subtitle %}{{ escape(category.title) }}{% end %}
+{% block left_col %}
+    <div id="archive_headline">
+        <h2>‘<span id="keyword">{{ escape(category.title) }}</span>’ 目录归档</h2>
+    </div>
+    {% module CategoryPostListModule(category) %}
+{% end %}

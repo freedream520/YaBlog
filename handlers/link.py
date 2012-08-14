@@ -31,6 +31,17 @@ class LinkListModule(UIModule, LinkMixin):
             self.cache.set(key, html, 3600)
         return html
 
+class LinkWidget(UIModule):
+    def render(self, count, tpl="modules/link_list.html"):
+        key = "LinkWidget"
+        html = self.cache.get(key)
+        if not html:
+            query = Link.query.order_by('+id').limit(count)
+            html = self.render_string(tpl, links=query)
+            self.cache.set(key, html, 3600)
+        return html
+
 ui_modules = {
     'LinkListModule' : LinkListModule,
+    'LinkWidget' : LinkWidget,
 }

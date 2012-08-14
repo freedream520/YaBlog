@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block subtitle %}{{ escape(post.title) }}{% end %}
+{% block left_col %}
+<div id="bread_crumb">
+    <ul class="clearfix">
+        <li id="bc_home">
+            <a href="/" title="{{ _('Home') }}">{{ _('Home') }}</a>
+        </li>
+        <li id="bc_cat">
+            <a href="{{ post.category.permalink }}" title="{{ escape(post.category.title) }}">{{ escape(post.category.title) }}</a>
+        </li>
+        <li class="last">{{ escape(post.title) }}</li>
+    </ul>
+</div>
+<div id="single" class="post_wrap">
+    <div id="post-{{ post.id }}" class="post">
+        <h3 class="title">{{ post.title }}</h3>
+        <div class="post_content">
+            {{ post.html }}
+        </div>
+        <div class="post_meta">
+            <ul class="clearfix">
+                <li><a href="{{ post.category.permalink }}" title="{{ escape(post.category.title) }}">{{ escape(post.category.title) }}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="meta">
+        <ul>
+            <li class="post_date">{{ post.created.strftime('%Y/%m/%d') }}</li>
+            <li class="post_views">{{ _('%s views') % post.views }}</li>
+            <li class="post_tags">{{ post.tags_link }}</li>
+        </ul>
+    </div>
+</div>
+<div id="comments_wrapper">
+    <div id="comments">
+        <div id="comment_area">
+    {% if post.comment_open %}
+    <div class="ds-thread"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"{{ context.duoshuo_shortname }}"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    {% end %}
+        </div>
+    </div>
+</div>
+{% end %}

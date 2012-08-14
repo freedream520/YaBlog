@@ -12,6 +12,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy import Integer,String,DateTime,Text, Boolean
 from sqlalchemy.orm import relationship, backref
 from tornado.options import options
+from tornado.escape import xhtml_escape
 
 from lib.database import db
 
@@ -71,6 +72,14 @@ class Post(db.Model):
         return ','.join(post_tags)
 
     @property
+    def tags_link(self):
+        tags = self.tags
+        if not tags:
+            return ''
+        links = ['<a href="%s" title="%s" class="tag">%s</a>' % (tag.permalink, xhtml_escape(tag.title), xhtml_escape(tag.title)) for tag in tags]
+        return ','.join(links)
+
+    @property
     def permalink(self):
         if not hasattr(self, '_permalink'):
             self._permalink = "%s/%s.html" % (options.siteurl, self.slug)
@@ -78,6 +87,12 @@ class Post(db.Model):
 
     def has_format(self, format):
         return self.format == format
+
+    @property
+    def post_excerpt(self):
+        if self.excerpt:
+            return self.excerpt
+        return self.html[0:500]
 
 class Category(db.Model):
 
