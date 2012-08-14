@@ -92,7 +92,7 @@ class Post(db.Model):
     def post_excerpt(self):
         if self.excerpt:
             return self.excerpt
-        return self.html[0:500]
+        return self.html[0:500].strip()
 
 class Category(db.Model):
 
