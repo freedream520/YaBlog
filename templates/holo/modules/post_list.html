@@ -25,6 +25,7 @@
 {% end %}
 {% if page.page_number > 1%}
 <div id="page_navi">
+     <div class="page_navi clearfix">
     <h4>{{ _('Page Navigation') }}</h4>
     <ul class="page-numbers">
         {% if page.current_page > 1 %}
@@ -41,5 +42,6 @@
         <li><a class="page-numbers next" href="?p={{ page.current_page + 1 }}">»</a></li>
         {% end %}
     </ul>
+</div>
 </div>
 {% end %}
