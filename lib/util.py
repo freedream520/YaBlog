@@ -3,6 +3,8 @@ import functools
 import hashlib
 from random import choice
 
+from HTMLParser import HTMLParser
+
 from tornado import ioloop, stack_context
 from tornado.options import define, options
 
@@ -97,3 +99,17 @@ class PageMixin(object):
         dct['item_number'] = count
         dct['order'] = order
         return dct
+
+class MLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
+def strip_tags(html):
+    s = MLStripper()
+    s.feed(html)
+    return s.get_data()

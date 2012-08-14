@@ -15,6 +15,7 @@ from tornado.options import options
 from tornado.escape import xhtml_escape
 
 from lib.database import db
+from lib.util import strip_tags
 
 class Tag(db.Model):
 
@@ -92,7 +93,7 @@ class Post(db.Model):
     def post_excerpt(self):
         if self.excerpt:
             return self.excerpt
-        return self.html[0:500].strip()
+        return strip_tags(self.html)[0:500]
 
 class Category(db.Model):
 
