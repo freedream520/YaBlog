@@ -32,13 +32,13 @@ def backup_mysql():
     mail.login(options.mail_username, options.mail_password)
 
     msg = MIMEMultipart('alternative')
-    sqlgz = "%s/168jy-%s03.sql.gz" % (bakdir, datetime.now().strftime('%Y%m%d'))
+    sqlgz = "%s/messense-%s.sql.gz" % (bakdir, datetime.now().strftime('%Y%m%d'))
     attach = MIMEText(open(sqlgz, 'rb').read(), 'base64', 'utf-8')
     attach['Content-Type'] = 'application/octet-stream'
-    attach['Content-Disposition'] = 'attachment;filename=168jy-%s03.sql.gz' % datetime.now().strftime('%Y%m%d')
+    attach['Content-Disposition'] = 'attachment;filename=messense-%s.sql.gz' % datetime.now().strftime('%Y%m%d')
     msg.attach(attach)
 
-    msg['Subject'] = Header('MySQL backup - 168jy.org', 'utf-8')
+    msg['Subject'] = Header('MySQL backup - messense.me', 'utf-8')
     msg['From'] = options.mail_from_addr
     msg['To'] = receiver
 
@@ -47,8 +47,8 @@ def backup_mysql():
 
 def main():
     parser = argparse.ArgumentParser(
-        prog='i168jy',
-        description='i168jy: a forum',
+        prog='YaBlog',
+        description='YaBlog: Yet another Blog',
     )
     parser.add_argument('command', nargs="*")
     parser.add_argument('-f', '--settings', dest='config')
@@ -62,8 +62,6 @@ def main():
     def run_command(cmd):
         if cmd == 'createdb':
             return create_db()
-        if cmd == 'createuser':
-            return create_superuser()
         if cmd == 'init':
             return init_project()
 
