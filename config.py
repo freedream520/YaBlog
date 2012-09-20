@@ -49,6 +49,13 @@ define('admin_nickname', type=str, default='demo')
 # duoshuo
 define('duoshuo_shortname', type=str, default='messense')
 
+# mail setting
+define('mail_notify', default=False, type=bool)
+define('mail_host', default='smtp.gmail.com:587', type=str)
+define('mail_username', default='', type=str)
+define('mail_password', default='', type=str)
+define('mail_from_addr', default='', type=str)
+
 # init  cache
 cache = None
 if options.cache:
