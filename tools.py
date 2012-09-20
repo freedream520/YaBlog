@@ -17,6 +17,7 @@ def init_project():
     pass
 
 def backup_mysql():
+    parse_config_file("/home/messense/config/messense.conf")
     import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
