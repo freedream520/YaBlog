@@ -39,7 +39,7 @@ class Application(web.Application):
 def main():
     if options.debug:
         # Development config
-        define('setting', '~/config/messense.conf')
+        define('setting', '/Users/messense/config/messense.conf')
     else:
         define('setting','')
     tornado.options.parse_command_line()

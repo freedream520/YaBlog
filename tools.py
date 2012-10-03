@@ -8,13 +8,36 @@ import app
 from lib.util import parse_config_file
 
 def create_db():
-    from config import db
+    from lib.database import db
     import models
     db.create_db()
     return
 
-def init_project():
-    pass
+def export():
+    from lib.database import db as conn
+    from models import Post
+    import os
+    from os import path
+    db = conn.session
+    posts = Post.query.all()
+    print("%s posts to be exported." % len(posts))
+    if not path.exists('%s/md' % config.PROJDIR):
+        os.mkdir("%s/md" % config.PROJDIR)
+    for post in posts:
+        fname = "%s/md/%s.md" % (config.PROJDIR, post.slug)
+        if not path.exists(fname):
+            text = "---\nlayout: %s\n" % post.type
+            text += "title: %s\npermalink: %s.html\n" % (post.title, post.slug)
+            text += "date: %s\n" % post.created.strftime("%Y-%m-%d %H:%M:%S")
+            if post.type == Post.TYPE_POST:
+                text += "category: %s\n" % post.category.title
+                text += "tags: [%s]\n" % (post.tags_str)
+            text += "---\n%s" % post.content
+            with open(fname, 'a') as f:
+                f.write(text)
+            print("%s.md created." % post.slug)
+    print("Export finished.")
+
 
 def backup_mysql():
     parse_config_file("/home/messense/config/messense.conf")
@@ -63,8 +86,8 @@ def main():
     def run_command(cmd):
         if cmd == 'createdb':
             return create_db()
-        if cmd == 'init':
-            return init_project()
+        if cmd == 'export':
+            return export()
 
     if isinstance(args.command, basestring):
         return run_command(args.command)
