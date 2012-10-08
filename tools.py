@@ -1,11 +1,19 @@
 #!/usr/bin/env python
-
+# -*- coding:utf-8 -*-
 import argparse
 import config
 from tornado.options import options
-import app
+# import app
+import sys
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
+    sys.setdefaultencoding(default_encoding)
 
 from lib.util import parse_config_file
+
+parse_config_file("/Users/messense/config/messense.conf")
+
 
 def create_db():
     from lib.database import db
@@ -13,18 +21,21 @@ def create_db():
     db.create_db()
     return
 
+
 def export():
-    from lib.database import db as conn
     from models import Post
     import os
     from os import path
-    db = conn.session
     posts = Post.query.all()
     print("%s posts to be exported." % len(posts))
     if not path.exists('%s/md' % config.PROJDIR):
         os.mkdir("%s/md" % config.PROJDIR)
     for post in posts:
         fname = "%s/md/%s.md" % (config.PROJDIR, post.slug)
+        if post.type == Post.TYPE_POST:
+            if not path.exists('%s/md/%s' % (config.PROJDIR, post.category.title)):
+                os.mkdir('%s/md/%s' % (config.PROJDIR, post.category.title))
+            fname = "%s/md/%s/%s.md" % (config.PROJDIR, post.category.title, post.slug)
         if not path.exists(fname):
             text = "---\nlayout: %s\n" % post.type
             text += "title: %s\npermalink: %s.html\n" % (post.title, post.slug)
@@ -32,7 +43,7 @@ def export():
             if post.type == Post.TYPE_POST:
                 text += "category: %s\n" % post.category.title
                 text += "tags: [%s]\n" % (post.tags_str)
-            text += "---\n%s" % post.content
+            text += "---\n\n%s" % post.content
             with open(fname, 'a') as f:
                 f.write(text)
             print("%s.md created." % post.slug)
@@ -40,7 +51,6 @@ def export():
 
 
 def backup_mysql():
-    parse_config_file("/home/messense/config/messense.conf")
     import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
@@ -68,6 +78,7 @@ def backup_mysql():
 
     mail.sendmail(options.mail_from_addr, receiver, msg.as_string())
     mail.close()
+
 
 def main():
     parser = argparse.ArgumentParser(
