@@ -5,8 +5,8 @@ from email.mime.text import MIMEText
 from email.Header import Header
 from tornado.options import options
 
-class MailClient(object):
 
+class MailClient(object):
     def __del__(self):
         if hasattr(self, 'client'):
             self.client.quit()

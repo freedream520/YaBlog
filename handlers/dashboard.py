@@ -8,17 +8,17 @@
 import hashlib
 
 from tornado.options import options
+from tornado.util import ObjectDict
 
 from lib.handler import DashboardHandler, UIModule
-from lib.filters import wrap_content
 from lib.decorators import require_admin
-from lib.util import create_token, PageMixin, ObjectDict
+from lib.util import PageMixin
 
 from models import Post, Category, Tag, Link
-from models.mixin import PostMixin, CategoryMixin, TagMixin, LinkMixin
+from models.mixin import PostMixin, CategoryMixin, LinkMixin
+
 
 class DashboardLoginHandler(DashboardHandler):
-
     def prepare(self):
         super(DashboardLoginHandler, self).prepare()
         if self.current_user:
@@ -49,20 +49,21 @@ class DashboardLoginHandler(DashboardHandler):
         self.set_secure_cookie('token', token)
         self.redirect('/dashboard')
 
+
 class DashboardIndexHandler(DashboardHandler):
-    
     @require_admin
     def get(self):
         self.render('dashboard/index.html')
 
-class DashboardCategoryListHandler(DashboardHandler, CategoryMixin):
 
+class DashboardCategoryListHandler(DashboardHandler, CategoryMixin):
     @require_admin
     def get(self):
-        self.render('dashboard/categories.html', categories=self.get_all_categories())
+        self.render(
+            'dashboard/categories.html', categories=self.get_all_categories())
+
 
 class DashboardPostListHandler(DashboardHandler, PageMixin):
-
     @require_admin
     def get(self):
         p = self._get_page()
@@ -70,14 +71,14 @@ class DashboardPostListHandler(DashboardHandler, PageMixin):
         page = ObjectDict(self._get_pagination(query, query.count(), 10))
         self.render('dashboard/posts.html', page=page)
 
-class DashboardPageListHandler(DashboardHandler, PostMixin):
 
+class DashboardPageListHandler(DashboardHandler, PostMixin):
     @require_admin
     def get(self):
         self.render('dashboard/pages.html', pages=self.get_all_pages())
 
-class DashboardTagListHandler(DashboardHandler, PageMixin):
 
+class DashboardTagListHandler(DashboardHandler, PageMixin):
     @require_admin
     def get(self):
         p = self._get_page()
@@ -85,36 +86,38 @@ class DashboardTagListHandler(DashboardHandler, PageMixin):
         page = ObjectDict(self._get_pagination(query, query.count(), 10))
         self.render('dashboard/tags.html', page=page)
 
-class DashboardLinkListHandler(DashboardHandler, LinkMixin):
 
+class DashboardLinkListHandler(DashboardHandler, LinkMixin):
     @require_admin
     def get(self):
         self.render('dashboard/links.html', links=self.get_all_links())
 
-class DashboardCreatePostHandler(DashboardHandler, CategoryMixin):
 
+class DashboardCreatePostHandler(DashboardHandler, CategoryMixin):
     @require_admin
     def get(self):
-        self.render('dashboard/create_post.html', categories=self.get_all_categories())
+        self.render('dashboard/create_post.html',
+                    categories=self.get_all_categories())
+
 
 class DashboardEditPostHandler(DashboardHandler, PostMixin, CategoryMixin):
-
     @require_admin
     def get(self, id):
         post = self.get_post_by_id(id)
         if not post:
             self.send_error(404)
             return
-        self.render('dashboard/edit_post.html', post=post, categories=self.get_all_categories())
+        self.render('dashboard/edit_post.html', post=post,
+                    categories=self.get_all_categories())
+
 
 class DashboardCreatePageHandler(DashboardHandler):
-
     @require_admin
     def get(self):
         self.render('dashboard/create_page.html')
 
-class DashboardEditPageHandler(DashboardHandler, PostMixin):
 
+class DashboardEditPageHandler(DashboardHandler, PostMixin):
     @require_admin
     def get(self, id):
         page = self.get_post_by_id(id)
@@ -137,6 +140,7 @@ handlers = [
     ('/dashboard/page/(\d+)', DashboardEditPageHandler),
 ]
 
+
 class SystemStatusModule(UIModule):
     def render(self, tpl="dashboard/system_status.html"):
         key = 'SystemStatus'
@@ -147,10 +151,12 @@ class SystemStatusModule(UIModule):
             page_count = Post.query.filter_by(type=Post.TYPE_PAGE).count()
             tag_count = Tag.query.count()
             link_count = Link.query.count()
-            html = self.render_string(tpl, category_count=category_count, post_count=post_count, page_count=page_count, tag_count=tag_count, link_count=link_count)
+            html = self.render_string(
+                tpl, category_count=category_count, post_count=post_count, page_count=page_count,
+                tag_count=tag_count, link_count=link_count)
             self.cache.set(key, html, 3600)
         return html
 
 ui_modules = {
-    'SystemStatusModule' : SystemStatusModule,
+    'SystemStatusModule': SystemStatusModule,
 }

@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
+import logging
 import functools
 import urlparse
-from tornado.options import options
+
 
 def require_admin(method):
     @functools.wraps(method)
@@ -17,6 +18,7 @@ def require_admin(method):
                 return self.redirect(url)
         return method(self, *args, **kwargs)
     return wrapper
+
 
 class cache(object):
     """Cache decorator, an easy way to manage cache.
@@ -53,6 +55,7 @@ class cache(object):
                     pass
             return value
         return wrapper
+
 
 def require_system(method):
     @functools.wraps(method)

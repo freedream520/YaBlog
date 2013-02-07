@@ -12,14 +12,15 @@ from lib.handler import BaseHandler, UIModule
 from models import Link
 from models.mixin import LinkMixin
 
-class LinksHandler(BaseHandler):
 
+class LinksHandler(BaseHandler):
     def get(self):
         self.render('links.html')
 
 handlers = [
     ('/links', LinksHandler),
 ]
+
 
 class LinkListModule(UIModule, LinkMixin):
     def render(self, tpl="modules/link_list.html"):
@@ -30,6 +31,7 @@ class LinkListModule(UIModule, LinkMixin):
             html = self.render_string(tpl, links=links)
             self.cache.set(key, html, 3600)
         return html
+
 
 class LinkWidget(UIModule):
     def render(self, count, tpl="modules/link_list.html"):
@@ -42,6 +44,6 @@ class LinkWidget(UIModule):
         return html
 
 ui_modules = {
-    'LinkListModule' : LinkListModule,
-    'LinkWidget' : LinkWidget,
+    'LinkListModule': LinkListModule,
+    'LinkWidget': LinkWidget,
 }

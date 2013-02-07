@@ -9,8 +9,8 @@
 """
 from lib.handler import BaseHandler
 
-class ErrorHandler(BaseHandler):
 
+class ErrorHandler(BaseHandler):
     def prepare(self):
         super(ErrorHandler, self).prepare()
         self.send_error(404)

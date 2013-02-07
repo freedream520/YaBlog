@@ -3,7 +3,7 @@ import re
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, TextLexer
-from tornado import escape
+
 
 def ubb(text):
     # ubb support for [br] and [br/]
@@ -99,8 +99,10 @@ def ubb(text):
         except ValueError:
             name = 'text'
             lexer = TextLexer()
-        content = m.group(2).replace('&quot;', '"').replace('&amp;', '&').replace('&nbsp;', ' ').replace('<p>','').replace('</p>','')
-        content = content.replace('&lt;', '<').replace('&gt;', '>').replace('&#39;','"')
+        content = m.group(2).replace('&quot;', '"').replace(
+            '&amp;', '&').replace('&nbsp;', ' ').replace('<p>', '').replace('</p>', '')
+        content = content.replace(
+            '&lt;', '<').replace('&gt;', '>').replace('&#39;', '"')
         code = highlight(content, lexer, formatter)
         code = code.replace('\n\n', '\n&nbsp;\n').replace('\n', '<br />')
         return '\n\n<div class="code">%s</div>\n\n' % code
@@ -121,7 +123,8 @@ def ubb(text):
         id = m.group(2)
         return '<div class="player"><embed src="http://www.xiami.com/widget/0_%s/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed></div>' % id
 
-    pattern = re.compile(r'\[xiami\](http://www\.xiami\.com/song/)?(\d+)(\?[\w=]*)?\[/xiami\]', re.I)
+    pattern = re.compile(
+        r'\[xiami\](http://www\.xiami\.com/song/)?(\d+)(\?[\w=]*)?\[/xiami\]', re.I)
     text = pattern.sub(ubb_xiami_music, text)
 
     return text

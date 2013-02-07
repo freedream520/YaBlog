@@ -9,8 +9,8 @@
 from models import Post, Category, Tag, Link
 from lib.database import db
 
-class PostMixin(object):
 
+class PostMixin(object):
     def get_post_by_id(self, id):
         return Post.query.filter_by(id=id).first()
 
@@ -34,8 +34,8 @@ class PostMixin(object):
     def get_all_pages(self):
         return Post.query.filter_by(type=Post.TYPE_PAGE).all()
 
-class CategoryMixin(object):
 
+class CategoryMixin(object):
     def get_category_by_id(self, id):
         return Category.query.filter_by(id=id).first()
 
@@ -53,8 +53,8 @@ class CategoryMixin(object):
     def get_all_categories(self):
         return Category.query.all()
 
-class TagMixin(object):
 
+class TagMixin(object):
     def get_tag_by_id(self, id):
         return Tag.query.filter_by(id=id).first()
 
@@ -109,8 +109,8 @@ class TagMixin(object):
         db.session.commit()
         return post_tags
 
-class LinkMixin(object):
 
+class LinkMixin(object):
     def get_link_by_id(self, id):
         return Link.query.filter_by(id=id).first()
 

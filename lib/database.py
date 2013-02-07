@@ -46,7 +46,7 @@ class DjangoQuery(Query):
         'istartswith': lambda c, x: c.ilike(x.replace('%', '%%') + '%'),
         'iendswith': lambda c, x: c.ilike('%' + x.replace('%', '%%')),
         'endswith': operators.endswith_op,
-        'isnull': lambda c, x: x and c != None or c == None,
+        'isnull': lambda c, x: x and c is not None or c is None,
         'range': operators.between_op,
         'year': lambda c, x: extract('year', c) == x,
         'month': lambda c, x: extract('month', c) == x,
@@ -174,7 +174,7 @@ class SQLAlchemy(object):
         self.engine = create_engine(master, **kwargs)
         self.session = create_session(self.engine)
         self.slaves = []
-        for slave in  slaves:
+        for slave in slaves:
             slave = create_engine(slave, **kwargs)
             self.slaves.append(create_session(slave))
 
@@ -206,4 +206,5 @@ class SQLAlchemy(object):
         self.Model.metadata.create_all(self.engine)
 
 # init db
-db = SQLAlchemy(options.master, options.slaves, echo=options.debug, convert_unicode=True)
+db = SQLAlchemy(
+    options.master, options.slaves, echo=options.debug, convert_unicode=True)

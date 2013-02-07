@@ -31,17 +31,19 @@ def export():
     if not path.exists('%s/md' % config.PROJDIR):
         os.mkdir("%s/md" % config.PROJDIR)
     for post in posts:
-        fname = "%s/md/%s-%s.md" % (config.PROJDIR, post.created.strftime('%Y-%m-%d'), post.slug)
+        fname = "%s/md/%s-%s.md" % (
+            config.PROJDIR, post.created.strftime('%Y-%m-%d'), post.slug)
         if post.type == Post.TYPE_POST:
             if not path.exists('%s/md/%s' % (config.PROJDIR, post.category.title)):
                 os.mkdir('%s/md/%s' % (config.PROJDIR, post.category.title))
-            fname = "%s/md/%s/%s-%s.md" % (config.PROJDIR, post.category.title, post.created.strftime('%Y-%m-%d'), post.slug)
+            fname = "%s/md/%s/%s-%s.md" % (config.PROJDIR, post.category.title,
+                                           post.created.strftime('%Y-%m-%d'), post.slug)
         else:
             fname = "%s/md/%s.md" % (config.PROJDIR, post.slug)
         if not path.exists(fname):
             text = "---\nlayout: %s\n" % post.type
             text += "title: %s\npermalink: %s.html\n" % (post.title, post.slug)
-            #text += "date: %s\n" % post.created.strftime("%Y-%m-%d %H:%M:%S")
+            # text += "date: %s\n" % post.created.strftime("%Y-%m-%d %H:%M:%S")
             if post.type == Post.TYPE_POST:
                 text += "category: %s\n" % post.category.title
                 text += "tags: [%s]\n" % (post.tags_str)
@@ -68,10 +70,12 @@ def backup_mysql():
     mail.login(options.mail_username, options.mail_password)
 
     msg = MIMEMultipart('alternative')
-    sqlgz = "%s/messense-%s.sql.gz" % (bakdir, datetime.now().strftime('%Y%m%d'))
+    sqlgz = "%s/messense-%s.sql.gz" % (
+        bakdir, datetime.now().strftime('%Y%m%d'))
     attach = MIMEText(open(sqlgz, 'rb').read(), 'base64', 'utf-8')
     attach['Content-Type'] = 'application/octet-stream'
-    attach['Content-Disposition'] = 'attachment;filename=messense-%s.sql.gz' % datetime.now().strftime('%Y%m%d')
+    attach['Content-Disposition'] = 'attachment;filename=messense-%s.sql.gz' % datetime.now(
+    ).strftime('%Y%m%d')
     msg.attach(attach)
 
     msg['Subject'] = Header('MySQL backup - messense.me', 'utf-8')

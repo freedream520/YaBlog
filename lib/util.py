@@ -8,15 +8,18 @@ from HTMLParser import HTMLParser
 from tornado import ioloop, stack_context
 from tornado.options import define, options
 
+
 def create_salt(length=16):
     chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     salt = ''.join([choice(chars) for i in range(length)])
     return salt
 
+
 def create_token(raw):
     salt = create_salt(8)
     hsh = hashlib.sha1(salt + raw + options.password_secret).hexdigest()
     return "%s$%s" % (salt, hsh)
+
 
 def parse_config_file(path):
     if not path:
@@ -29,20 +32,12 @@ def parse_config_file(path):
         else:
             define(name, config[name])
 
-class ObjectDict(dict):
-    def __getattr__(self, key):
-        if key in self:
-            return self[key]
-        return None
-
-    def __setattr__(self, key, value):
-        self[key] = value
-
 
 def delay_call(func, *arg, **kwargs):
     with stack_context.NullContext():
         io = ioloop.IOLoop.instance()
         io.add_callback(functools.partial(func, *arg, **kwargs))
+
 
 class PageMixin(object):
     def _get_order(self, default='-id', orders={}):
@@ -83,7 +78,7 @@ class PageMixin(object):
             page = page_number
         if page < 1:
             page = 1
-            
+
         offset = (page - 1) * perpage
 
         dct = {}
@@ -100,14 +95,18 @@ class PageMixin(object):
         dct['order'] = order
         return dct
 
+
 class MLStripper(HTMLParser):
     def __init__(self):
         self.reset()
         self.fed = []
+
     def handle_data(self, d):
         self.fed.append(d)
+
     def get_data(self):
         return ''.join(self.fed)
+
 
 def strip_tags(html):
     s = MLStripper()

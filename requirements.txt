@@ -1,0 +1,9 @@
+tornado
+sqlalchemy
+MySQL-python
+markdown
+redis
+rq
+memcache
+pygments
+argparse

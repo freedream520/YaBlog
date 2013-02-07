@@ -2,10 +2,8 @@
 import re
 import markdown
 
-from tornado import escape
-from tornado.options import options
-
 from lib.ubb import ubb
+
 
 def wrap_content(text):
 
@@ -32,6 +30,7 @@ def wrap_content(text):
     text = pattern.sub(make_link, text)
 
     return ubb(markdown.markdown(text))
+
 
 def xmldatetime(value):
     return value.strftime('%Y-%m-%dT%H:%M:%SZ')

@@ -4,18 +4,19 @@
     @date 2012-05-11
     I love cici.
     I guess when you're young...you just believe there'll be many people with whom you'll connect with.
-    Later in life you realize it only happens a few times. 
+    Later in life you realize it only happens a few times.
 """
 from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
-from sqlalchemy import Integer,String,DateTime,Text, Boolean
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Integer, String, DateTime, Text, Boolean
+from sqlalchemy.orm import relationship
 from tornado.options import options
 from tornado.escape import xhtml_escape
 
 from lib.database import db
 from lib.util import strip_tags
+
 
 class Tag(db.Model):
 
@@ -30,12 +31,14 @@ class Tag(db.Model):
             self._permalink = "%s/tag/%s" % (options.siteurl, self.slug)
         return self._permalink
 
+
 class Post(db.Model):
 
     TYPE_POST = 'post'
     TYPE_PAGE = 'page'
 
-    category_id = Column(Integer, ForeignKey('category.id'), index=True, nullable=False)
+    category_id = Column(
+        Integer, ForeignKey('category.id'), index=True, nullable=False)
     type = Column(String(30), default='post', index=True)
     title = Column(String(200))
     content = Column(Text)
@@ -77,7 +80,8 @@ class Post(db.Model):
         tags = self.tags
         if not tags:
             return ''
-        links = ['<a href="%s" title="%s" class="tag">%s</a>' % (tag.permalink, xhtml_escape(tag.title), xhtml_escape(tag.title)) for tag in tags]
+        links = ['<a href="%s" title="%s" class="tag">%s</a>' % (
+            tag.permalink, xhtml_escape(tag.title), xhtml_escape(tag.title)) for tag in tags]
         return ','.join(links)
 
     @property
@@ -95,6 +99,7 @@ class Post(db.Model):
             return self.excerpt
         return strip_tags(self.html)[0:500]
 
+
 class Category(db.Model):
 
     title = Column(String(200), nullable=False)
@@ -109,6 +114,7 @@ class Category(db.Model):
         if not hasattr(self, '_permalink'):
             self._permalink = "%s/category/%s" % (options.siteurl, self.slug)
         return self._permalink
+
 
 class Link(db.Model):
 

@@ -12,7 +12,6 @@ from handlers import tag
 from handlers import link
 from handlers import api
 from handlers import dashboard
-
 from handlers import ErrorHandler
 
 # Routes

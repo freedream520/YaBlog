@@ -7,11 +7,10 @@
 """
 from lib.handler import BaseHandler, UIModule
 
-from models import Tag
 from models.mixin import TagMixin
 
-class TagHandler(BaseHandler, TagMixin):
 
+class TagHandler(BaseHandler, TagMixin):
     def get(self, slug):
         tag = self.get_tag_by_slug(slug)
         if not tag:
@@ -19,8 +18,8 @@ class TagHandler(BaseHandler, TagMixin):
             return
         self.render('tag.html', tag=tag)
 
-class TagCloudHandler(BaseHandler):
 
+class TagCloudHandler(BaseHandler):
     def get(self):
         self.render('tags.html')
 
@@ -28,6 +27,7 @@ handlers = [
     ('/tag/(.+)', TagHandler),
     ('/tags', TagCloudHandler),
 ]
+
 
 class TagCloudModule(UIModule, TagMixin):
     def render(self, tpl="modules/tag_cloud.html"):
@@ -40,5 +40,5 @@ class TagCloudModule(UIModule, TagMixin):
         return html
 
 ui_modules = {
-    'TagCloudModule' : TagCloudModule,
+    'TagCloudModule': TagCloudModule,
 }

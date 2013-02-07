@@ -8,14 +8,14 @@ from tornado import web
 from tornado.web import RequestHandler
 from tornado.options import options
 from tornado import escape
-from tornado import locale
+from tornado.util import ObjectDict
 
 from pygments import highlight
 from pygments.lexers import get_lexer_for_filename
 from pygments.formatters import HtmlFormatter
 
-from lib.util import ObjectDict, create_token
 from lib.filters import xmldatetime, wrap_content
+
 
 class AppHandler(RequestHandler):
 
@@ -26,7 +26,7 @@ class AppHandler(RequestHandler):
             AppHandler._first_run = False
 
     def finish(self, chunk=None):
-        super(AppHandler,self).finish(chunk)
+        super(AppHandler, self).finish(chunk)
         if self.get_status() == 500:
             try:
                 self.db.commit()
@@ -58,30 +58,33 @@ class AppHandler(RequestHandler):
             def get_snippet(fp, target_line, num_lines):
                 if fp.endswith('.html'):
                     fp = os.path.join(self.get_template_path(), fp)
-                half_lines = (num_lines/2)
+                half_lines = (num_lines / 2)
                 try:
                     with open(fp) as f:
                         all_lines = [line for line in f]
-                        code = ''.join(all_lines[target_line-half_lines-1:target_line+half_lines])
-                        formatter = HtmlFormatter(linenos=True, linenostart=target_line-half_lines, hl_lines=[half_lines+1])
-                        lexer = get_lexer_for_filename(fp) 
+                        code = ''.join(all_lines[target_line -
+                                       half_lines - 1:target_line + half_lines])
+                        formatter = HtmlFormatter(
+                            linenos=True, linenostart=target_line - half_lines, hl_lines=[half_lines + 1])
+                        lexer = get_lexer_for_filename(fp)
                         return highlight(code, lexer, formatter)
-                except Exception, ex:
+                except Exception:
                     return ''
 
             css = HtmlFormatter().get_style_defs('.highlight')
             exception = kwargs.get('exception', None)
-            exception_template = os.path.join(self.settings['template_path'], 'exception.html')
-            return self.render_string(exception_template, 
+            exception_template = os.path.join(
+                self.settings['template_path'], 'exception.html')
+            return self.render_string(exception_template,
                                       get_snippet=get_snippet,
                                       css=css,
                                       exception=exception,
-                                      status_code=status_code, 
+                                      status_code=status_code,
                                       kwargs=kwargs)
 
     @property
     def next_url(self):
-        next_url = self.get_argument('next',None)
+        next_url = self.get_argument('next', None)
         if next_url:
             next_url = next_url.replace('%2F', '/')
         return next_url or '/'
@@ -114,7 +117,7 @@ class BaseHandler(AppHandler):
         kwargs.update(self._filters)
         assert "context" not in kwargs, "context is a reserved keyword."
         kwargs["context"] = self._context
-        return super(BaseHandler, self).render_string(template_name,**kwargs)
+        return super(BaseHandler, self).render_string(template_name, **kwargs)
 
     def get_template_path(self):
         return os.path.join(options.template_path, options.theme_name)
@@ -148,7 +151,8 @@ class BaseHandler(AppHandler):
         self._context.duoshuo_shortname = options.duoshuo_shortname
         self._context.message = []
         self._context.form = ObjectDict()
-        self._context.next_url = self.next_url or self.request.headers.get("HTTP-REFERER",'/')
+        self._context.next_url = self.next_url or self.request.headers.get(
+            "HTTP-REFERER", '/')
 
     def _prepare_filters(self):
         self._filters = ObjectDict()
@@ -170,6 +174,7 @@ class BaseHandler(AppHandler):
     def form_error(self, field, msg=''):
         setattr(self._context.form, field, msg)
 
+
 class DashboardHandler(BaseHandler):
 
     def get_current_user(self):
@@ -184,6 +189,7 @@ class DashboardHandler(BaseHandler):
 
     def get_template_path(self):
         return self.settings.get('template_path')
+
 
 class ApiHandler(AppHandler):
 
@@ -203,15 +209,17 @@ class ApiHandler(AppHandler):
             self.clear_cookie('token')
             return None
         return True
-    
+
     def write(self, chunk):
         if isinstance(chunk, dict):
             chunk = escape.json_encode(chunk)
             callback = self.get_argument('callback', None)
             if callback:
                 chunk = "%s{%s}" % (callback, escape.to_unicode(chunk))
-            self.set_header("Content-Type","application/javascript; charset=UTF-8")
+            self.set_header(
+                "Content-Type", "application/javascript; charset=UTF-8")
         super(ApiHandler, self).write(chunk)
+
 
 class UIModule(web.UIModule):
 
